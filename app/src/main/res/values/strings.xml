@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Memories</string>
+
+
+    <!-- Textes des onglets -->
+    <string name="first_tab_name">Fil d\'actualité</string>
+    <string name="second_tab_name">Thèmes</string>
+
+
+</resources>

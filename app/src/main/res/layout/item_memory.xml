@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_marginTop="@dimen/default_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/memoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/image_item"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="Souvenir"
+            android:textSize="24dp"/>
+
+        <TextView
+            android:id="@+id/memoryDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/memoryTitle"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/image_item"
+            android:text="Ceci est une description du souvenir"
+            android:textAlignment="viewStart"
+            android:textSize="16dp" />
+
+        <ImageView
+            android:id="@+id/image_item"
+            android:layout_width="124dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:src="@drawable/defaultpic"
+            android:scaleType="centerCrop"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

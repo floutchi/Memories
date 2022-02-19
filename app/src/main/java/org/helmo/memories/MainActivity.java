@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-import org.helmo.memories.fragments.HomeFragment;
+import org.helmo.memories.view.fragments.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 

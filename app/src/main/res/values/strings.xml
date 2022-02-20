@@ -6,5 +6,10 @@
     <string name="first_tab_name">Fil d\'actualité</string>
     <string name="second_tab_name">Thèmes</string>
 
+    <!-- Texte des FAB -->
+    <string name="add_theme">Ajouter un thème</string>
+    <string name="add_souvenir">Ajouter un souvenir</string>
+
+
 
 </resources>

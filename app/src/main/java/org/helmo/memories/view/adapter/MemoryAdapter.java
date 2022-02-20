@@ -1,4 +1,4 @@
-package org.helmo.memories.view;
+package org.helmo.memories.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

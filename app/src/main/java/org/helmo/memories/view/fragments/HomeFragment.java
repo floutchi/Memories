@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.helmo.memories.R;
-import org.helmo.memories.view.adapter.MemoryAdapter;
+import org.helmo.memories.view.MemoryAdapter;
 
 public class HomeFragment extends Fragment {
 

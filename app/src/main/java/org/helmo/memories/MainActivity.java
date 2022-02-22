@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onAddBtnClicked(View view) {
         if(!clicked) {
+
+            add_theme_btn.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_open));
+            add_souvenir_btn.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_open));
+
             // Set Visibility
             add_theme_btn.setVisibility(View.VISIBLE);
             add_souvenir_btn.setVisibility(View.VISIBLE);
@@ -58,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
             add_btn.startAnimation(rotateOpen);
         } else {
             // Set visibility
+            add_theme_btn.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_close));
+            add_souvenir_btn.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_close));
+
+
+
             add_theme_btn.setVisibility(View.GONE);
             add_souvenir_btn.setVisibility(View.GONE);
 

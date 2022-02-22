@@ -9,7 +9,7 @@
     <!-- Texte des FAB -->
     <string name="add_theme">Ajouter un thème</string>
     <string name="add_souvenir">Ajouter un souvenir</string>
-
+    <string name="srch_hint">Effectuer une recherche</string>
 
 
 </resources>

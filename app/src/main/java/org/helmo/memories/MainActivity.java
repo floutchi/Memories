@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -46,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
 
+    }
+
+    public void onSearchButtonClicked(View view) {
+        Toast.makeText(this, "jsp", Toast.LENGTH_SHORT).show();
     }
 
     public void onAddBtnClicked(View view) {

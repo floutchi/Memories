@@ -3,19 +3,44 @@ package org.helmo.memories.view.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.R;
+import org.helmo.memories.model.Memory;
+
+import java.util.List;
 
 public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder> {
 
+    private final MainActivity context;
+    private final List<Memory> memoryList;
+    private final int layoutId;
+
+    public MemoryAdapter(MainActivity context, List<Memory> memoryList, int layoutId) {
+        this.context = context;
+        this.memoryList = memoryList;
+        this.layoutId = layoutId;
+    }
+
+
     // Boite pour ranger tous les composants à controller
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView memoryImage;
+        TextView memoryTitle;
+        TextView memoryDescription;
+        TextView memoryDate;
         ViewHolder(View view) {
             super(view);
-            View memoryImage = view.findViewById(R.id.image_item); // Image du souvenir
+            this.memoryImage = view.findViewById(R.id.memoryImage);
+            this.memoryTitle = view.findViewById(R.id.memoryTitle);
+            this.memoryDescription = view.findViewById(R.id.memoryDescription);
+            this.memoryDate = view.findViewById(R.id.memoryDate);
+
         }
     }
 
@@ -27,10 +52,20 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) { }
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Memory currentMemory = memoryList.get(position);
+        ImageView memoryImage = holder.memoryImage;
+        TextView memoryTitle = holder.memoryTitle;
+        TextView memoryDescription = holder.memoryDescription;
+        TextView memoryDate = holder.memoryDate;
+        if(memoryImage != null && memoryTitle != null && memoryDescription != null && memoryDate != null) {
+            memoryTitle.setText(currentMemory.getTitle());
+        }
+
+    }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return memoryList.size();
     }
 }

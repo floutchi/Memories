@@ -11,5 +11,17 @@
     <string name="add_souvenir">Ajouter un souvenir</string>
     <string name="srch_hint">Effectuer une recherche</string>
 
+    <!-- Texte d'ajout d'un souvenir -->
+    <string name="add_title"><font size="30">Ajouter un nom</font></string>
+    <string name="add_description">Ajouter une description</string>
+    <string name="add_date">Ajouter une date</string>
+    <string name="add_place">Ajouter un lieu</string>
+    <string name="add_pic">Ajouter une photo</string>
+    <string name="add_the_souvenir">Ajouter le souvenir</string>
+
+
+
+
+
 
 </resources>

@@ -5,27 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/search_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/srch_hint"
-            android:autofillHints="name"
-            android:inputType="text" />
-
-        <Button
-            android:id="@+id/searchButton"
-            android:onClick="onSearchButtonClicked"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_search"/>
-    </LinearLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

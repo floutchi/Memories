@@ -4,52 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/topBar"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/purple_500"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            style="@style/appNameStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
-            android:text="@string/app_name" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom">
-
-            <com.google.android.material.tabs.TabLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabTextColor="@color/white">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/first_tab_name" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/second_tab_name" />
-
-            </com.google.android.material.tabs.TabLayout>
-        </LinearLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+    tools:context=".view.activities.MainActivity">
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
         />
 
 
@@ -66,36 +26,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="TODO" />
 
-    <Button
-        android:id="@+id/add_theme_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/default_margin"
-        android:backgroundTint="@color/purple_500"
-        android:text="@string/add_theme"
-        android:textColor="@color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"
-        android:onClick="onAddThemeBtnClicked"
-        app:layout_constraintBottom_toTopOf="@+id/add_btn"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/add_souvenir_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/default_margin"
-        android:backgroundTint="@color/purple_500"
-        android:text="@string/add_souvenir"
-        android:textColor="@color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"
-        android:onClick="onAddSouvenirBtnClicked"
-        app:layout_constraintBottom_toTopOf="@+id/add_theme_btn"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

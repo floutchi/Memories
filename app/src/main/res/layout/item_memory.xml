@@ -13,7 +13,7 @@
             android:id="@+id/memoryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/image_item"
+            android:layout_toEndOf="@+id/memoryImage"
             android:layout_marginStart="@dimen/default_margin"
             android:gravity="center"
             android:text="Souvenir"
@@ -26,13 +26,13 @@
             android:layout_below="@+id/memoryTitle"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/image_item"
+            android:layout_toEndOf="@+id/memoryImage"
             android:text="Ceci est une description du souvenir"
             android:textAlignment="viewStart"
             android:textSize="16dp" />
 
         <ImageView
-            android:id="@+id/image_item"
+            android:id="@+id/memoryImage"
             android:layout_width="124dp"
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
@@ -40,6 +40,7 @@
             android:scaleType="centerCrop"/>
 
         <TextView
+            android:id="@+id/memoryDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -47,7 +48,7 @@
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginTop="130dp"
             android:layout_marginBottom="0dp"
-            android:layout_toEndOf="@+id/image_item"
+            android:layout_toEndOf="@+id/memoryImage"
             android:text="12/03/2022" />
 
     </RelativeLayout>

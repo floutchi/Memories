@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Memories" >
         <activity
-            android:name=".view.activities.AddMemoryActivity"
+            android:name=".view.fragments.AddMemoryFragment"
             android:exported="false" />
         <activity
             android:name=".view.activities.MainActivity"

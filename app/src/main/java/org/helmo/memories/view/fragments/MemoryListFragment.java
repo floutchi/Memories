@@ -28,6 +28,7 @@ public class MemoryListFragment extends Fragment implements MemoryListPresenter.
         this.context = context;
     }
 
+
     public interface ISelectedMemory {
         void onSelectedMemory(int id);
     }
@@ -43,7 +44,7 @@ public class MemoryListFragment extends Fragment implements MemoryListPresenter.
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        memoryList.add(new Memory("jsp", "jsp", "", "", false));
+        //memoryList.add(new Memory("jsp", "jsp", "", "", false));
 
         // Récupérer le recycler view
         RecyclerView horizontalRecyclerView = view.findViewById(R.id.recycler_view);

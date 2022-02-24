@@ -12,9 +12,6 @@ public class MemoryListPresenter {
     private List<Memory> memories;
     private final IMemoryListScreen screen;
 
-    public interface IMemoryItemScreen {
-       void showMemory(int id, String name, String description, String date); // Pour afficher le souvenir
-    }
 
     public interface IMemoryListScreen {
         void refreshView(); // Pour rafraichir la vue

@@ -60,6 +60,7 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
         TextView memoryDate = holder.memoryDate;
         if(memoryImage != null && memoryTitle != null && memoryDescription != null && memoryDate != null) {
             memoryTitle.setText(currentMemory.getTitle());
+            //TODO: Set text des autres TextView
         }
 
     }

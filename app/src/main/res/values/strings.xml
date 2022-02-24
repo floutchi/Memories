@@ -17,10 +17,11 @@
     <string name="add_date">Ajouter une date</string>
     <string name="add_place">Ajouter un lieu</string>
     <string name="add_pic">Ajouter une photo</string>
+    <string name="take_pic">Prendre une photo</string>
     <string name="add_the_souvenir">Ajouter le souvenir</string>
 
-
-
+    <!-- Texte d'ajout d'un lieu -->
+    <string name="pick_location">Choisir le lieu</string>
 
 
 

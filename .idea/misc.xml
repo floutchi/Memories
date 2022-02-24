@@ -6,6 +6,7 @@
         <entry key="..\:/Users/etuni/OneDrive/Documents/Cours/dev-mobil/Project/Memories/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/etuni/OneDrive/Documents/Cours/dev-mobil/Project/Memories/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/etuni/OneDrive/Documents/Cours/dev-mobil/Project/Memories/app/src/main/res/layout/item_memory.xml" value="0.1" />
+        <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/drawable-anydpi/ic_camera.xml" value="0.4" />
         <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/drawable-anydpi/ic_pic.xml" value="0.4" />
         <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/drawable-anydpi/ic_place.xml" value="0.4" />
         <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/drawable-anydpi/ic_plus.xml" value="0.222" />
@@ -15,9 +16,11 @@
         <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/layout/activity_add_memory.xml" value="0.4005208333333333" />
         <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/layout/activity_add_memory2.xml" value="0.4005208333333333" />
         <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/layout/activity_main.xml" value="0.4005208333333333" />
+        <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/layout/add_memory_fragment.xml" value="0.4005208333333333" />
         <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/layout/fragment_add_memory.xml" value="0.4005208333333333" />
         <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/layout/fragment_home.xml" value="0.4005208333333333" />
         <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/layout/item_memory.xml" value="0.4005208333333333" />
+        <entry key="..\:/dev/androidProjects/Memories/app/src/main/res/layout/place_picker_fragment.xml" value="0.375" />
       </map>
     </option>
   </component>

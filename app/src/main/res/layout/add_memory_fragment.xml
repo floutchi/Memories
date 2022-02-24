@@ -11,7 +11,7 @@
         android:layout_height="70dp"
         android:layout_margin="@dimen/default_margin"
         android:hint="@string/add_title"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -30,7 +30,6 @@
         app:layout_constraintTop_toBottomOf="@+id/addDescription"
         android:backgroundTint="@color/purple_500"
         android:textColor="@color/white"
-
         android:drawableStart="@drawable/ic_time"
         android:drawableTint="@color/white"
         android:paddingLeft="@dimen/default_padding"
@@ -52,16 +51,30 @@
 
     <Button
         android:id="@+id/addPicBtn"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/purple_500"
-        android:textColor="@color/white"
-        android:text="@string/add_pic"
-        app:layout_constraintTop_toBottomOf="@+id/addPlaceBtn"
         android:drawableStart="@drawable/ic_pic"
+        android:drawablePadding="@dimen/drawable_padding"
         android:drawableTint="@color/white"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"/>
+        android:text="@string/add_pic"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addPlaceBtn" />
+
+    <Button
+        android:id="@+id/takePicBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/purple_500"
+        android:drawableStart="@drawable/ic_camera"
+        android:drawableTint="@color/white"
+        android:drawablePadding="@dimen/drawable_padding"
+        android:text="@string/take_pic"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addPicBtn"
+        app:layout_constraintTop_toBottomOf="@+id/addPlaceBtn" />
 
     <Button
         android:id="@+id/addMemoryBtn"
@@ -76,8 +89,19 @@
         android:text="@string/add_the_souvenir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/memoryImage"
+        android:layout_width="300sp"
+        android:layout_height="300sp"
+        android:src="@drawable/defaultpic"
+        android:scaleType="centerCrop"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/addMemoryBtn"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="onAddMemoryBtnClick"/>
+        app:layout_constraintTop_toBottomOf="@+id/addPicBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

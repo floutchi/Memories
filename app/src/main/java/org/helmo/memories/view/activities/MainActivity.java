@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         add_btn.setVisibility(View.GONE);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new AddMemoryFragment());
+        transaction.replace(R.id.fragment_container, new AddMemoryFragment(this));
         transaction.addToBackStack(null);
         transaction.commit();
 

@@ -1,5 +1,7 @@
 package org.helmo.memories.view.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.R;
 import org.helmo.memories.model.Memory;
 
+import java.io.File;
 import java.util.List;
 
 public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder> {
@@ -60,7 +63,13 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
         TextView memoryDate = holder.memoryDate;
         if(memoryImage != null && memoryTitle != null && memoryDescription != null && memoryDate != null) {
             memoryTitle.setText(currentMemory.getTitle());
-            //TODO: Set text des autres TextView
+            memoryDescription.setText(currentMemory.getDescription());
+            memoryDate.setText(currentMemory.getDate());
+
+            File imgFile = new File(currentMemory.getImagePath());
+            if(imgFile.exists()) {
+                memoryImage.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath())); //TODO n'affiche pas l'image
+            }
         }
 
     }

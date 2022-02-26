@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import androidx.fragment.app.FragmentResultListener;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.helmo.memories.R;
+import org.helmo.memories.presenters.MemoryListPresenter;
 import org.helmo.memories.utils.DateFormatter;
 import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.view.activities.MapsActivity;
@@ -56,8 +58,13 @@ public class AddMemoryFragment extends Fragment {
     protected static final String DIALOG_DATE = "DialogDate";
     View view;
 
+    EditText add_name;
+    EditText add_description;
+
     Button add_date;
     Button add_place;
+    double longitude;
+    double lattitude;
     Button add_pic;
     Button take_pic;
 
@@ -65,14 +72,17 @@ public class AddMemoryFragment extends Fragment {
     String memoryImagePath;
 
     Button add_memory;
+
     MainActivity context;
+    MemoryListPresenter memoryListPresenter;
 
     ActivityResultLauncher<Intent> takeImageArl;
     ActivityResultLauncher<Intent> pickImageArl;
     ActivityResultLauncher<Intent> pickPlaceArl;
 
-    public AddMemoryFragment(MainActivity context) {
+    public AddMemoryFragment(MainActivity context, MemoryListPresenter memoryListPresenter) {
         this.context = context;
+        this.memoryListPresenter = memoryListPresenter;
     }
 
     @Nullable
@@ -86,6 +96,10 @@ public class AddMemoryFragment extends Fragment {
         add_pic = view.findViewById(R.id.addPicBtn);
         take_pic = view.findViewById(R.id.takePicBtn);
         add_memory = view.findViewById(R.id.addMemoryBtn);
+
+        // Récupérer les EditText
+        add_name = view.findViewById(R.id.addName);
+        add_description = view.findViewById(R.id.addDescription);
 
         // Récupérer l'image
         memory_image = view.findViewById(R.id.memoryImage);
@@ -109,7 +123,8 @@ public class AddMemoryFragment extends Fragment {
     }
 
     private void addMemory() {
-        //TODO récupérer les champs et faire appel au Presenter pour ajouter l'objet Memory à la liste
+        memoryListPresenter.addMemory(add_name.getText().toString(), add_description.getText().toString(), memoryImagePath, add_date.getText().toString(), this.lattitude, this.longitude);
+        context.onBackPressed();
     }
 
 
@@ -152,8 +167,8 @@ public class AddMemoryFragment extends Fragment {
 
         if(result.getResultCode() == Activity.RESULT_OK) {
             LatLng latLng = (LatLng) data.getParcelableExtra("picked_point");
-            double lattitude = latLng.latitude; // A ajouter à l'objet Memory lors de l'ajout
-            double longitude = latLng.longitude; // A ajouter à l'objet Memory lors de l'ajout
+            this.lattitude = latLng.latitude; // A ajouter à l'objet Memory lors de l'ajout
+            this.longitude = latLng.longitude; // A ajouter à l'objet Memory lors de l'ajout
             NumberFormat formatter = new DecimalFormat("0.00000");
             add_place.setText("Coordonnées: lat " + formatter.format(lattitude) + " lon " + formatter.format(longitude));
 
@@ -170,7 +185,7 @@ public class AddMemoryFragment extends Fragment {
             // Mettre à jour l'aperçu de l'image
             memory_image.setImageURI(selectedImage);
             memory_image.setVisibility(View.VISIBLE);
-            String path = getRealPathFromURI(selectedImage); // A ajouter à l'objet Memory lors de l'ajout
+            memoryImagePath = getRealPathFromURI(selectedImage); // A ajouter à l'objet Memory lors de l'ajout
         }
     }
 

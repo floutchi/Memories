@@ -17,7 +17,7 @@ public class MemoryRepository {
 
     private MemoryRepository() {}
 
-    public LiveData<List<Memory>> getMemories() {
+    public List<Memory> getMemories() {
         return memoryDao.getAllMemories();
     }
 

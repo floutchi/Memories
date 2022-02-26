@@ -22,21 +22,20 @@ import java.util.List;
 public class MemoryListFragment extends Fragment implements MemoryListPresenter.IMemoryListScreen {
 
     private final MainActivity context;
-    List<Memory> memoryList = new ArrayList<>();
+    List<Memory> memoryList;
+
+    RecyclerView horizontalRecyclerView;
 
     public MemoryListFragment(MainActivity context) {
         this.context = context;
     }
 
-
     public interface ISelectedMemory {
         void onSelectedMemory(int id);
     }
 
-
-    public static MemoryListFragment newInstance() {
-        MemoryListFragment fragment = new MemoryListFragment(null); //TODO
-        return fragment;
+    public void setMemoryList(List<Memory> memoryList) {
+        this.memoryList = memoryList;
     }
 
     @Nullable
@@ -45,13 +44,13 @@ public class MemoryListFragment extends Fragment implements MemoryListPresenter.
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Récupérer le recycler view
-        RecyclerView horizontalRecyclerView = view.findViewById(R.id.recycler_view);
+        horizontalRecyclerView = view.findViewById(R.id.recycler_view);
         horizontalRecyclerView.setAdapter(new MemoryAdapter(context, memoryList, R.id.recycler_view));
         return view;
     }
 
     @Override
     public void refreshView() {
-
+        horizontalRecyclerView.setAdapter(new MemoryAdapter(context, memoryList, R.id.recycler_view));
     }
 }

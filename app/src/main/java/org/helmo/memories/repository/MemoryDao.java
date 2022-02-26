@@ -15,7 +15,7 @@ import java.util.List;
 public interface MemoryDao {
 
     @Query("SELECT * FROM Memory")
-    LiveData<List<Memory>> getAllMemories();
+    List<Memory> getAllMemories();
 
     @Query("SELECT * FROM Memory WHERE uid = (:id)")
     LiveData<Memory> getMemory(int id);

@@ -20,16 +20,14 @@ public class MemoryListPresenter {
     }
 
     public void loadMemories() {
-        MemoryRepository.getInstance().getMemories().observeForever(memories -> {
-            MemoryListPresenter.this.memories = memories;
-            screen.refreshView();
-        });
+        MemoryListPresenter.this.memories = MemoryRepository.getInstance().getMemories();
     }
 
-    public int addMemory() {
-        Memory memory = new Memory("", "", "", "", false, 0, 0); //TODO
+    public void addMemory(String title, String description, String imagePath, String date, double lattitude, double longitude) {
+        Memory memory = new Memory(title, description, imagePath, date, false, lattitude, longitude);
+        memories.add(memory);
         MemoryRepository.getInstance().insertMemory(memory);
-        return memory.getUid();
+        screen.refreshView();
     }
 
     public int getItemCount() {
@@ -38,6 +36,10 @@ public class MemoryListPresenter {
         } else {
             return memories.size();
         }
+    }
+
+    public List<Memory> getMemoryList() {
+        return memories;
     }
 
 }

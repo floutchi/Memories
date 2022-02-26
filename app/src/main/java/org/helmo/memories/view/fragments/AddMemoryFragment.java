@@ -1,10 +1,12 @@
 package org.helmo.memories.view.fragments;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,6 +30,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
@@ -199,6 +203,9 @@ public class AddMemoryFragment extends Fragment {
                 // Mettre à jour l'aperçu de l'image
                 memory_image.setImageBitmap(imageBitmap);
                 memory_image.setVisibility(View.VISIBLE);
+                if(ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+                }
                 saveImage(imageBitmap); //TODO Sauvegarder l'image ne fonctionne pas ??
                 // Ajouter le path de l'image sauvegardée dans l'objet Memory lors de l'ajout
             }

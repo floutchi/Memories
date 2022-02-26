@@ -1,7 +1,10 @@
 package org.helmo.memories.view.adapter;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.R;
@@ -56,7 +63,9 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Récupérer l'objet mémory courant
         Memory currentMemory = memoryList.get(position);
+        // Récupérer les view de l'item
         ImageView memoryImage = holder.memoryImage;
         TextView memoryTitle = holder.memoryTitle;
         TextView memoryDescription = holder.memoryDescription;
@@ -66,9 +75,15 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
             memoryDescription.setText(currentMemory.getDescription());
             memoryDate.setText(currentMemory.getDate());
 
-            File imgFile = new File(currentMemory.getImagePath());
+            File imgFile = new File(currentMemory.getImagePath()); // Récupérer le chemin de l'image
+            // Vérifier les droits d'accès au fichier
+            if(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+            }
+            // Vérifier que le fichier existe toujours
             if(imgFile.exists()) {
-                memoryImage.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath())); //TODO n'affiche pas l'image
+                Uri imageUri = Uri.fromFile(imgFile);
+                Glide.with(context).load(imageUri).into(memoryImage); // Remplacer l'image par défaut par le fichier trouvé
             }
         }
 

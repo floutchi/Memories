@@ -35,11 +35,10 @@ public class MainActivity extends AppCompatActivity {
         add_btn = view.findViewById(R.id.add_btn); // Permet de rendre invisible le bouton +
         add_btn.setVisibility(View.GONE);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction(); // Démarre le fragment d'ajout d'un souvenir
         transaction.replace(R.id.fragment_container, new AddMemoryFragment(this));
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
 
     @Override

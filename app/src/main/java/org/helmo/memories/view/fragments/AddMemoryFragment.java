@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -26,18 +30,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.helmo.memories.R;
 import org.helmo.memories.utils.DateFormatter;
 import org.helmo.memories.view.activities.MainActivity;
+import org.helmo.memories.view.activities.MapsActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class AddMemoryFragment extends Fragment {
@@ -58,6 +69,7 @@ public class AddMemoryFragment extends Fragment {
 
     ActivityResultLauncher<Intent> takeImageArl;
     ActivityResultLauncher<Intent> pickImageArl;
+    ActivityResultLauncher<Intent> pickPlaceArl;
 
     public AddMemoryFragment(MainActivity context) {
         this.context = context;
@@ -84,20 +96,31 @@ public class AddMemoryFragment extends Fragment {
         // Ajout de l'image
         pickImageArl = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::pickImageResult);
         takeImageArl = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::takePhotoResult);
+        pickPlaceArl = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::takePlaceResult);
         add_pic.setOnClickListener(view -> pickupImage());
         take_pic.setOnClickListener(view -> takeImage());
         // Ajout du lieu
         add_place.setOnClickListener(view -> selectPlace());
 
+
+        // Bouton final d'ajout du souvenir
+        add_memory.setOnClickListener(view -> addMemory());
         return view;
+    }
+
+    private void addMemory() {
+        //TODO récupérer les champs et faire appel au Presenter pour ajouter l'objet Memory à la liste
     }
 
 
     private void selectPlace() {
-
+        // Lance l'activité pour choisir un lieu
+        Intent intent = new Intent(context, MapsActivity.class);
+        pickPlaceArl.launch(intent);
     }
 
     private void selectDate() {
+        // Lance le fragment pour choisir une date
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(DateFormatter.toDate(dateFormat.format(date)));
@@ -110,6 +133,7 @@ public class AddMemoryFragment extends Fragment {
     }
 
     private void pickupImage() {
+        // Lance l'activité pour choisir une image
         Intent intent = new Intent();
         intent.setType("image/");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -117,11 +141,27 @@ public class AddMemoryFragment extends Fragment {
     }
 
     private void takeImage() {
+        // Lance l'activité pour prendre une photo
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takeImageArl.launch(takePicture);
     }
 
+    private void takePlaceResult(ActivityResult result) {
+        // Résultat de l'activité de l'ajout d'un lieu
+        Intent data = result.getData();
+
+        if(result.getResultCode() == Activity.RESULT_OK) {
+            LatLng latLng = (LatLng) data.getParcelableExtra("picked_point");
+            double lattitude = latLng.latitude; // A ajouter à l'objet Memory lors de l'ajout
+            double longitude = latLng.longitude; // A ajouter à l'objet Memory lors de l'ajout
+            NumberFormat formatter = new DecimalFormat("0.00000");
+            add_place.setText("Coordonnées: lat " + formatter.format(lattitude) + " lon " + formatter.format(longitude));
+
+        }
+    }
+
     private void pickImageResult(ActivityResult result) {
+        // Résultat de l'activité pour choisir une image
         Intent data = result.getData();
         // Vérifier si les données sont nulles
         if(data != null || data.getData() != null) {
@@ -130,10 +170,12 @@ public class AddMemoryFragment extends Fragment {
             // Mettre à jour l'aperçu de l'image
             memory_image.setImageURI(selectedImage);
             memory_image.setVisibility(View.VISIBLE);
+            String path = getRealPathFromURI(selectedImage); // A ajouter à l'objet Memory lors de l'ajout
         }
     }
 
     private void takePhotoResult(ActivityResult result) {
+        // Resultat de l'activité pour prendre une photo
         Intent data = result.getData();
         if(result.getResultCode() == Activity.RESULT_OK) {
             if(data != null || data.getData() != null) {
@@ -142,11 +184,37 @@ public class AddMemoryFragment extends Fragment {
                 // Mettre à jour l'aperçu de l'image
                 memory_image.setImageBitmap(imageBitmap);
                 memory_image.setVisibility(View.VISIBLE);
-                saveImage(imageBitmap); //TODO Sauvegarder l'image ??
+                saveImage(imageBitmap); //TODO Sauvegarder l'image ne fonctionne pas ??
+                // Ajouter le path de l'image sauvegardée dans l'objet Memory lors de l'ajout
             }
         }
     }
 
+    /**
+     * Permet de récupérer le chemin d'une image sélectionnée
+     * @param contentURI URI de l'image
+     * @return le chemin sous forme de string de l'image
+     */
+    private String getRealPathFromURI(Uri contentURI) {
+
+        String result;
+        Cursor cursor = context.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
+
+    /**
+     * Permet de sauvegarder une image //TODO NE FONCTIONNE PAS
+     * @param imageBitmap image à sauvegarder
+     */
     private void saveImage(Bitmap imageBitmap) {
         ContextWrapper contextWrapper = new ContextWrapper(context);
         File dir = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);

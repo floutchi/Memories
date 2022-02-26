@@ -4,10 +4,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 @Entity
 public class Memory {
 
@@ -24,13 +20,19 @@ public class Memory {
     private String date;
     @ColumnInfo
     private boolean favorite;
+    @ColumnInfo
+    private double lattitude;
+    @ColumnInfo
+    private double longitude;
 
-    public Memory(String title, String description, String imagePath, String date, boolean favorite) {
+    public Memory(String title, String description, String imagePath, String date, boolean favorite, double lattitude, double longitude) {
         this.title = title;
         this.description = description;
         this.imagePath = imagePath;
         this.date = date;
         this.favorite = favorite;
+        this.lattitude = lattitude;
+        this.longitude = longitude;
     }
 
     public int getUid() {
@@ -51,6 +53,14 @@ public class Memory {
 
     public String getDate() {
         return date;
+    }
+
+    public double getLattitude() {
+        return lattitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 
     public boolean isFavorite() {

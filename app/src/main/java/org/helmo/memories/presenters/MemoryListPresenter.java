@@ -1,7 +1,5 @@
 package org.helmo.memories.presenters;
 
-import androidx.lifecycle.Observer;
-
 import org.helmo.memories.model.Memory;
 import org.helmo.memories.repository.MemoryRepository;
 
@@ -29,7 +27,7 @@ public class MemoryListPresenter {
     }
 
     public int addMemory() {
-        Memory memory = new Memory("", "", "", "", false); //TODO
+        Memory memory = new Memory("", "", "", "", false, 0, 0); //TODO
         MemoryRepository.getInstance().insertMemory(memory);
         return memory.getUid();
     }

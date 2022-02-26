@@ -44,8 +44,6 @@ public class MemoryListFragment extends Fragment implements MemoryListPresenter.
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        //memoryList.add(new Memory("jsp", "jsp", "", "", false));
-
         // Récupérer le recycler view
         RecyclerView horizontalRecyclerView = view.findViewById(R.id.recycler_view);
         horizontalRecyclerView.setAdapter(new MemoryAdapter(context, memoryList, R.id.recycler_view));

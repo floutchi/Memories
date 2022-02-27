@@ -35,39 +35,78 @@ public class Memory {
         this.longitude = longitude;
     }
 
+    /**
+     *  renvoie id de image
+     * @return uid du souvenir
+     */
     public int getUid() {
         return uid;
     }
 
+    /**
+     * renvoie le titre du souvenir
+     * @return le titre
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * renvoie la description du souvenir
+     * @return la description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * renvoie le chemain du souvenir
+     * @return le chemain de l'image
+     */
     public String getImagePath() {
         return imagePath;
     }
 
+    /**
+     * renvoie la date du souvenir
+     * @return la date
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * renvoie la lattitude du souvenir
+     * @return la lattitude
+     */
     public double getLattitude() {
         return lattitude;
     }
 
+    /**
+     * renvoie la longitude du souvenir
+     * @return la longitude
+     */
     public double getLongitude() {
         return longitude;
     }
 
+    /**
+     *  renvoie statut du souvenir
+     * @return true si image est favorite ou false si elle ne l'est pas
+     */
     public boolean isFavorite() {
         return favorite;
     }
 
+    /**
+     * affect un nouvel id au souvenir
+     * @param uid nouvelle id
+     */
     public void setUid(int uid) {
         this.uid = uid;
     }
+
+
+
 }

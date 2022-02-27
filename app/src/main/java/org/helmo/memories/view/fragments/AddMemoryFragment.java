@@ -133,6 +133,7 @@ public class AddMemoryFragment extends Fragment {
         add_description.setText("");
         memoryImagePath = "";
         add_date.setText("");
+        pickImageArl = null;
         context.onBackPressed();
     }
 

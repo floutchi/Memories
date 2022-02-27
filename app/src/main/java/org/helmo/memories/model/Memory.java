@@ -103,10 +103,40 @@ public class Memory {
      * affect un nouvel id au souvenir
      * @param uid nouvelle id
      */
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setUid(int uid) { this.uid = uid; }
+
+    /**
+     * Change le titre d'un souvenir
+     * @param title
+     */
+    public void setTitle(String title) {this.title = title; }
+
+    /**
+     * Change la description du souvenir
+     * @param description
+     */
+    public void setDescription(String description) {this.description = description; }
+
+    /**
+     * Change la date du souvenir
+     * @param date
+     */
+    public void setDate(String date) { this.date = date; }
+
+    /**
+     * Change les cordonnée gps
+     * @param newLongitude
+     * @param newLattitude
+     */
+    public void changeLocalisation(double newLongitude, double newLattitude){
+        this.longitude = newLongitude;
+        this.lattitude = newLattitude;
     }
 
-
-
+    /**
+     * permet de chnager le staut de "image" si elle est favorit ou pas
+     */
+    public void changeStatut(){
+        favorite = !favorite;
+    }
 }

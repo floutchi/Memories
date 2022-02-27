@@ -45,6 +45,51 @@ public class MemoryTest {
         Memory memory = new Memory("","","","a",true,1,1);
         assertEquals(1,memory.getLongitude(), 0);
     }
+    @Test
+    public void setDate() {
+        Memory memory = new Memory("","","","a",true,1,1);
+        memory.setDate("52");
+        assertEquals("52",memory.getDate() );
+    }
+
+    @Test
+    public void setDescription() {
+        Memory memory = new Memory("","","","a",true,1,1);
+        memory.setDescription("52");
+        assertEquals("52",memory.getDescription() );
+    }
+
+    @Test
+    public void setTitle() {
+        Memory memory = new Memory("","","","a",true,1,1);
+        memory.setTitle("52");
+        assertEquals("52",memory.getTitle() );
+    }
+
+    @Test
+    public void chaneStatutStartValueIsTrue() {
+        Memory memory = new Memory("","","","a",true,1,1);
+        memory.changeStatut();
+        assertFalse(memory.isFavorite());
+    }
+
+    @Test
+    public void chaneStatutStartValueIsFalse() {
+        Memory memory = new Memory("","","","a",false,1,1);
+        memory.changeStatut();
+        assertTrue(memory.isFavorite());
+    }
+
+    @Test
+    public void changeCoordinate() {
+        Memory memory = new Memory("","","","a",false,1,1);
+        memory.changeLocalisation(25,25);
+        assertEquals(25, memory.getLongitude(),0);
+        assertEquals(25, memory.getLattitude(),0);
+    }
+
+
+
 
 
 }

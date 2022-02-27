@@ -26,8 +26,8 @@ public class Memory {
     private double longitude;
 
     public Memory(String title, String description, String imagePath, String date, boolean favorite, double lattitude, double longitude) {
-        this.title = title;
-        this.description = description;
+        this.title = title.trim();
+        this.description = description.trim();
         this.imagePath = imagePath;
         this.date = date;
         this.favorite = favorite;

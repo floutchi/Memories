@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -128,6 +129,10 @@ public class AddMemoryFragment extends Fragment {
 
     private void addMemory() {
         memoryListPresenter.addMemory(add_name.getText().toString(), add_description.getText().toString(), memoryImagePath, add_date.getText().toString(), this.lattitude, this.longitude);
+        add_name.setText("");
+        add_description.setText("");
+        memoryImagePath = "";
+        add_date.setText("");
         context.onBackPressed();
     }
 
@@ -152,10 +157,9 @@ public class AddMemoryFragment extends Fragment {
     }
 
     private void pickupImage() {
+
         // Lance l'activité pour choisir une image
-        Intent intent = new Intent();
-        intent.setType("image/");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickImageArl.launch(intent);
     }
 

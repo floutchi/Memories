@@ -254,7 +254,5 @@ public class AddMemoryFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }

@@ -75,18 +75,20 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
             memoryDescription.setText(currentMemory.getDescription());
             memoryDate.setText(currentMemory.getDate());
 
-            File imgFile = new File(currentMemory.getImagePath()); // Récupérer le chemin de l'image
-            // Vérifier les droits d'accès au fichier
-            if(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+            if(currentMemory.getImagePath() != null) {
+                File imgFile = new File(currentMemory.getImagePath()); // Récupérer le chemin de l'image
+                // Vérifier les droits d'accès au fichier
+                while(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+                }
+                // Vérifier que le fichier existe toujours
+                if(imgFile.exists()) {
+                    Uri imageUri = Uri.fromFile(imgFile);
+                    Glide.with(context).load(imageUri).into(memoryImage); // Remplacer l'image par défaut par le fichier trouvé
+                }
             }
-            // Vérifier que le fichier existe toujours
-            if(imgFile.exists()) {
-                Uri imageUri = Uri.fromFile(imgFile);
-                Glide.with(context).load(imageUri).into(memoryImage); // Remplacer l'image par défaut par le fichier trouvé
-            }
-        }
 
+        }
     }
 
     @Override

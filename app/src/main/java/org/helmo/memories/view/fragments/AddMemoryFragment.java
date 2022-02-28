@@ -57,6 +57,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 public class AddMemoryFragment extends Fragment {
 
@@ -245,9 +246,10 @@ public class AddMemoryFragment extends Fragment {
     private void saveImage(Bitmap imageBitmap) {
         ContextWrapper contextWrapper = new ContextWrapper(context);
         File dir = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
-        File path = new File(dir, "memory.png");
-
+        File path = new File(dir, UUID.randomUUID()+".png");
+        System.err.println( "test : "+path.toString());
         try {
+            memoryImagePath = path.toString();
             FileOutputStream fos = new FileOutputStream(path);
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();

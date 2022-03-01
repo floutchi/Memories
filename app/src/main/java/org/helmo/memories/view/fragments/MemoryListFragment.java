@@ -1,5 +1,6 @@
 package org.helmo.memories.view.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +21,20 @@ import java.util.List;
 
 public class MemoryListFragment extends Fragment implements MemoryListPresenter.IMemoryListScreen {
 
+    private MemoryListPresenter memoryListPresenter;
     private final MainActivity context;
     List<Memory> memoryList;
 
+    ISelectMemory callback;
+
     RecyclerView horizontalRecyclerView;
+
+    public interface ISelectMemory {
+        void onSelectedMemory(int memoryId);
+    }
 
     public MemoryListFragment(MainActivity context) {
         this.context = context;
-    }
-
-    public interface ISelectedMemory {
-        void onSelectedMemory(int id);
     }
 
     public void setMemoryList(List<Memory> memoryList) {
@@ -44,12 +48,31 @@ public class MemoryListFragment extends Fragment implements MemoryListPresenter.
 
         // Récupérer le recycler view
         horizontalRecyclerView = view.findViewById(R.id.recycler_view);
-        horizontalRecyclerView.setAdapter(new MemoryListAdapter(context, memoryList, R.id.recycler_view));
+        horizontalRecyclerView.setAdapter(new MemoryListAdapter(context, null, callback));
         return view;
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        memoryListPresenter = new MemoryListPresenter(this);
+        memoryListPresenter.loadMemories();
+    }
+
+    @Override
     public void refreshView() {
-        horizontalRecyclerView.setAdapter(new MemoryListAdapter(context, memoryList, R.id.recycler_view));
+        horizontalRecyclerView.setAdapter(new MemoryListAdapter(context, memoryListPresenter, callback));
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        callback = (ISelectMemory) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        callback = null;
     }
 }

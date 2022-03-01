@@ -132,7 +132,6 @@ public class AddMemoryFragment extends Fragment {
         memoryListPresenter.addMemory(add_name.getText().toString(), add_description.getText().toString(), memoryImagePath, add_date.getText().toString(), this.lattitude, this.longitude);
         add_name.setText("");
         add_description.setText("");
-        memoryImagePath = "";
         add_date.setText("");
         pickImageArl = null;
         context.onBackPressed();

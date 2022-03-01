@@ -12,9 +12,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.helmo.memories.R;
 import org.helmo.memories.presenters.MemoryListPresenter;
 import org.helmo.memories.view.fragments.AddMemoryFragment;
+import org.helmo.memories.view.fragments.MemoryFragment;
 import org.helmo.memories.view.fragments.MemoryListFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MemoryListFragment.ISelectMemory {
 
     FloatingActionButton add_btn;
 
@@ -57,5 +58,10 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         add_btn.setVisibility(View.VISIBLE); // Permet de rendre à nouveau visible le bouton + lors du retour en arrière
         super.onBackPressed();
+    }
+
+    @Override
+    public void onSelectedMemory(int memoryId) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, MemoryFragment.newInstance(memoryId)).addToBackStack(null).commit();
     }
 }

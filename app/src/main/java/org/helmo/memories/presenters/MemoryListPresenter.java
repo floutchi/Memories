@@ -10,6 +10,9 @@ public class MemoryListPresenter {
     private List<Memory> memories;
     private final IMemoryListScreen screen;
 
+    public interface IMemoryItemScreen {
+        void showMemory(int id, String title, String description, String imagePath, String date);
+    }
 
     public interface IMemoryListScreen {
         void refreshView(); // Pour rafraichir la vue
@@ -20,7 +23,14 @@ public class MemoryListPresenter {
     }
 
     public void loadMemories() {
-        MemoryListPresenter.this.memories = MemoryRepository.getInstance().getMemories();
+        MemoryRepository.getInstance().getMemories().observeForever(memories -> {
+            this.memories = memories;
+            screen.refreshView();
+        });
+    }
+
+    public Memory getMemory(int position) {
+        return memories.get(position);
     }
 
     public void addMemory(String title, String description, String imagePath, String date, double lattitude, double longitude) {
@@ -40,6 +50,11 @@ public class MemoryListPresenter {
 
     public List<Memory> getMemoryList() {
         return memories;
+    }
+
+    public void showMemoryOn(IMemoryItemScreen holder, int position) {
+        Memory m = memories.get(position);
+        holder.showMemory(m.getUid(), m.getTitle(), m.getDescription(), m.getImagePath(), m.getDate());
     }
 
 }

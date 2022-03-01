@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Instancier les attributs
+        add_btn = this.findViewById(R.id.add_btn);
         memoryListFragment = new MemoryListFragment(this);
         memoryListPresenter = new MemoryListPresenter(memoryListFragment);
         memoryListPresenter.loadMemories();
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAddBtnClicked(View view) {
-        add_btn = view.findViewById(R.id.add_btn); // Permet de rendre invisible le bouton +
+        // Permet de rendre invisible le bouton +
         add_btn.setVisibility(View.GONE);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction(); // Démarre le fragment d'ajout d'un souvenir

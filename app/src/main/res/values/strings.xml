@@ -25,8 +25,10 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="action_geolocate">Pick Place</string>
     <string name="default_info_title">Default Location</string>
-    <string name="default_info_snippet">No places found, because location permission is disabled.</string>
     <string name="confirm">Confirmer cette position</string>
+
+    <!-- Texte d'un souvenir -->
+    <string name="title_memory">Titre du souvenir</string>
 
 
 </resources>

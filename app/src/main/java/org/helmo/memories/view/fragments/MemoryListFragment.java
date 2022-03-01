@@ -14,9 +14,8 @@ import org.helmo.memories.presenters.MemoryListPresenter;
 import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.R;
 import org.helmo.memories.model.Memory;
-import org.helmo.memories.view.adapter.MemoryAdapter;
+import org.helmo.memories.view.adapter.MemoryListAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MemoryListFragment extends Fragment implements MemoryListPresenter.IMemoryListScreen {
@@ -45,12 +44,12 @@ public class MemoryListFragment extends Fragment implements MemoryListPresenter.
 
         // Récupérer le recycler view
         horizontalRecyclerView = view.findViewById(R.id.recycler_view);
-        horizontalRecyclerView.setAdapter(new MemoryAdapter(context, memoryList, R.id.recycler_view));
+        horizontalRecyclerView.setAdapter(new MemoryListAdapter(context, memoryList, R.id.recycler_view));
         return view;
     }
 
     @Override
     public void refreshView() {
-        horizontalRecyclerView.setAdapter(new MemoryAdapter(context, memoryList, R.id.recycler_view));
+        horizontalRecyclerView.setAdapter(new MemoryListAdapter(context, memoryList, R.id.recycler_view));
     }
 }

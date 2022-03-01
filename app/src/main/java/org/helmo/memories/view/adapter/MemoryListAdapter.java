@@ -1,9 +1,8 @@
 package org.helmo.memories.view.adapter;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,17 +22,18 @@ import com.bumptech.glide.Glide;
 import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.R;
 import org.helmo.memories.model.Memory;
+import org.helmo.memories.view.fragments.MemoryFragment;
 
 import java.io.File;
 import java.util.List;
 
-public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder> {
+public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.ViewHolder> {
 
     private final MainActivity context;
     private final List<Memory> memoryList;
     private final int layoutId;
 
-    public MemoryAdapter(MainActivity context, List<Memory> memoryList, int layoutId) {
+    public MemoryListAdapter(MainActivity context, List<Memory> memoryList, int layoutId) {
         this.context = context;
         this.memoryList = memoryList;
         this.layoutId = layoutId;
@@ -88,11 +90,29 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
                 }
             }
 
+
+            // Interraction lors du clic sur un souvenir
+            holder.itemView.setOnClickListener(view -> {
+                // Afficher le fragmen du souvenir
+                displayMemory(currentMemory);
+            });
         }
+    }
+
+    private void displayMemory(Memory currentMemory) {
+        MemoryFragment memoryFragment = new MemoryFragment(context, currentMemory);
+        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, memoryFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
     public int getItemCount() {
         return memoryList.size();
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

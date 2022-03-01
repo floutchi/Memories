@@ -212,7 +212,7 @@ public class AddMemoryFragment extends Fragment {
                 if(ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
                 }
-                saveImage(imageBitmap); //TODO Sauvegarder l'image ne fonctionne pas ??
+                saveImage(imageBitmap);
                 // Ajouter le path de l'image sauvegardée dans l'objet Memory lors de l'ajout
             }
         }
@@ -240,7 +240,7 @@ public class AddMemoryFragment extends Fragment {
 
 
     /**
-     * Permet de sauvegarder une image //TODO NE FONCTIONNE PAS
+     * Permet de sauvegarder une image
      * @param imageBitmap image à sauvegarder
      */
     private void saveImage(Bitmap imageBitmap) {

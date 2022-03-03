@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements MemoryListFragmen
 
     @Override
     public void onSelectedMemory(int memoryId) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, MemoryFragment.newInstance(memoryId)).addToBackStack(null).commit();
+        MemoryFragment memoryFragment = new MemoryFragment(this, memoryId);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, memoryFragment).addToBackStack(null).commit();
     }
 }

@@ -61,6 +61,9 @@ import java.util.UUID;
 
 public class AddMemoryFragment extends Fragment {
 
+
+    //TODO : Vérifier que les données entrées ne sont pas vides --> Alert Dialog
+
     protected static final String DIALOG_DATE = "DialogDate";
     View view;
 

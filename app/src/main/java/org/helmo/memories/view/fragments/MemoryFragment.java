@@ -1,5 +1,7 @@
 package org.helmo.memories.view.fragments;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +15,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.helmo.memories.R;
 import org.helmo.memories.presenters.MemoryPresenter;
 import org.helmo.memories.view.viewmodel.MemoryViewModel;
+
+import java.io.File;
 
 public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryScreen {
 
@@ -28,15 +40,18 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
     ImageView imageView;
     MapView mapView;
 
-
+    Context context;
     private int memoryId;
 
     private MemoryPresenter memoryPresenter;
 
-    public static MemoryFragment newInstance(int memoryId) {
-        MemoryFragment memoryFragment = new MemoryFragment();
-        memoryFragment.memoryId = memoryId;
-        return memoryFragment;
+    public MemoryFragment (Context context, int memoryId) {
+        this.context = context;
+        this.memoryId = memoryId;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
 
@@ -62,7 +77,27 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
     }
 
     @Override
-    public void showEntireMemory(String title) {
-        titleView.setText(title); //TODO
+    public void showEntireMemory(String title, String description, String imagePath, String date, double lattitude, double longitude) {
+        titleView.setText(title);
+        descriptionView.setText(description);
+        dateView.setText(date);
+
+        if(imagePath != null) {
+            File imgFile = new File(imagePath);
+            if(imgFile.exists()) {
+                Uri imageUri = Uri.fromFile(imgFile);
+                Glide.with(context).load(imageUri).into(imageView); // Remplacer l'image par défaut par le fichier trouvé
+            }
+        }
+
+        if(lattitude != 0.0 && longitude != 0.0) {
+            SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapMemory);
+
+            supportMapFragment.getMapAsync(googleMap -> {
+                LatLng pos = new LatLng(lattitude, longitude);
+                googleMap.addMarker(new MarkerOptions().position(pos));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 16.0f));
+            });
+        }
     }
 }

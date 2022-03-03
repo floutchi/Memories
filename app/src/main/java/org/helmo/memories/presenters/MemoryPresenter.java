@@ -11,7 +11,11 @@ public class MemoryPresenter {
 
 
     public interface IMemoryScreen {
-        void showEntireMemory(String title);
+        void showEntireMemory(String title,
+                              String description,
+                              String imagePath,
+                              String date,
+                              double lattitude, double longitude);
     }
 
 
@@ -23,7 +27,11 @@ public class MemoryPresenter {
     public void loadMemory(int position) {
         MemoryRepository.getInstance().getMemoryById(position).observeForever(memory -> {
             this.memory = memory;
-            memoryScreen.showEntireMemory(memory.getTitle()); //TODO
+            memoryScreen.showEntireMemory(memory.getTitle(),
+                    memory.getDescription(),
+                    memory.getImagePath(),
+                    memory.getDate(),
+                    memory.getLattitude(), memory.getLongitude()); //TODO
         });
     }
 }

@@ -3,6 +3,7 @@ package org.helmo.memories.view.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -54,9 +55,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 import java.util.UUID;
 
 public class AddMemoryFragment extends Fragment {
@@ -132,12 +130,23 @@ public class AddMemoryFragment extends Fragment {
     }
 
     private void addMemory() {
-        memoryListPresenter.addMemory(add_name.getText().toString(), add_description.getText().toString(), memoryImagePath, add_date.getText().toString(), this.lattitude, this.longitude);
-        add_name.setText("");
-        add_description.setText("");
-        add_date.setText("");
-        pickImageArl = null;
-        context.onBackPressed();
+        try {
+            memoryListPresenter.addMemory(add_name.getText().toString(), add_description.getText().toString(), memoryImagePath, add_date.getText().toString(), this.lattitude, this.longitude);
+            add_name.setText("");
+            add_description.setText("");
+            add_date.setText("");
+            pickImageArl = null;
+            lattitude = 0.0;
+            longitude = 0.0d;
+
+            context.onBackPressed();
+        }catch (Exception ex){
+            new AlertDialog.Builder(context)
+                    .setTitle("Erreur")
+                    .setMessage(ex.getMessage())
+                    .show();
+        }
+
     }
 
 

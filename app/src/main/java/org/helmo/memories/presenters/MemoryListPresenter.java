@@ -1,6 +1,7 @@
 package org.helmo.memories.presenters;
 
 import org.helmo.memories.model.Memory;
+import org.helmo.memories.model.factories.MemoryFactories;
 import org.helmo.memories.repository.MemoryRepository;
 
 import java.util.List;
@@ -33,8 +34,8 @@ public class MemoryListPresenter {
         return memories.get(position);
     }
 
-    public void addMemory(String title, String description, String imagePath, String date, double lattitude, double longitude) {
-        Memory memory = new Memory(title, description, imagePath, date, false, lattitude, longitude);
+    public void addMemory(String title, String description, String imagePath, String date, double lattitude, double longitude) throws Exception {
+        Memory memory = MemoryFactories.createMemory(title, description, imagePath, date, lattitude, longitude);
         memories.add(memory);
         MemoryRepository.getInstance().insertMemory(memory);
         screen.refreshView();

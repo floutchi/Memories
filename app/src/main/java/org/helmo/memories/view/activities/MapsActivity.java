@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
@@ -64,9 +63,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         while(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        currentPos = new LatLng(location.getLatitude(), location.getLongitude());
-        marker = mMap.addMarker(new MarkerOptions().position(currentPos).title("Votre position"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, 16.0f));
+        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, location -> {
+            currentPos = new LatLng(location.getLatitude(), location.getLongitude());
+            marker = mMap.addMarker(new MarkerOptions().position(currentPos).title("Votre position"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, 16.0f));
+        }, null);
     }
 }

@@ -151,9 +151,21 @@ public class AddMemoryFragment extends Fragment {
 
 
     private void selectPlace() {
-        // Lance l'activité pour choisir un lieu
-        Intent intent = new Intent(context, MapsActivity.class);
-        pickPlaceArl.launch(intent);
+
+        if (ActivityCompat.checkSelfPermission( context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            // Lance l'activité pour choisir un lieu
+            Intent intent = new Intent(context, MapsActivity.class);
+            pickPlaceArl.launch(intent);
+        }else{
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION)){
+                String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
+                ActivityCompat.requestPermissions(context, permissions, 2);
+            }else{
+
+            }
+        }
+
+
     }
 
     private void selectDate() {
@@ -171,15 +183,36 @@ public class AddMemoryFragment extends Fragment {
 
     private void pickupImage() {
 
+        if (ActivityCompat.checkSelfPermission( context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickImageArl.launch(intent);
+        }else{
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.READ_EXTERNAL_STORAGE)){
+                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                ActivityCompat.requestPermissions(context, permissions, 2);
+            }else{
+
+            }
+        }
+
         // Lance l'activité pour choisir une image
-        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickImageArl.launch(intent);
+
     }
 
     private void takeImage() {
         // Lance l'activité pour prendre une photo
-        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        takeImageArl.launch(takePicture);
+        if (ActivityCompat.checkSelfPermission( context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+            Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            takeImageArl.launch(takePicture);
+        }else{
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.CAMERA)){
+                String[] permissions = {Manifest.permission.CAMERA};
+                ActivityCompat.requestPermissions(context, permissions, 2);
+            }else{
+
+            }
+        }
+
     }
 
     private void takePlaceResult(ActivityResult result) {

@@ -51,7 +51,7 @@
         android:layout_marginTop="@dimen/default_margin"
         android:src="@drawable/ic_edit"
         app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/deleteBtn"

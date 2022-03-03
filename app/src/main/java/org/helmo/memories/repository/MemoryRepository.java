@@ -23,12 +23,16 @@ public class MemoryRepository {
 
     public LiveData<Memory> getMemoryById(int id) { return memoryDao.getMemory(id);}
 
-    public void updateMemory(final Memory memory) {
-        executor.execute(() -> memoryDao.update(memory));
+    public void deleteMemory(int id) {
+        executor.execute(() -> memoryDao.deleteByID(id));
     }
 
     public void insertMemory(final Memory memory) {
         executor.execute(() -> memoryDao.insertMemory(memory));
+    }
+
+    public void setFavorite(int id) {
+        executor.execute(() -> memoryDao.setFavorite(id));
     }
 
     public static MemoryRepository getInstance() {

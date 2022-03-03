@@ -140,7 +140,7 @@ public class AddMemoryFragment extends Fragment {
             longitude = 0.0d;
 
             context.onBackPressed();
-        }catch (Exception ex){
+        } catch (Exception ex){
             new AlertDialog.Builder(context)
                     .setTitle("Erreur")
                     .setMessage(ex.getMessage())
@@ -156,16 +156,12 @@ public class AddMemoryFragment extends Fragment {
             // Lance l'activité pour choisir un lieu
             Intent intent = new Intent(context, MapsActivity.class);
             pickPlaceArl.launch(intent);
-        }else{
+        } else {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION)){
                 String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
                 ActivityCompat.requestPermissions(context, permissions, 2);
-            }else{
-
             }
         }
-
-
     }
 
     private void selectDate() {
@@ -186,16 +182,12 @@ public class AddMemoryFragment extends Fragment {
         if (ActivityCompat.checkSelfPermission( context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
             Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickImageArl.launch(intent);
-        }else{
+        } else {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.READ_EXTERNAL_STORAGE)){
                 String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
                 ActivityCompat.requestPermissions(context, permissions, 2);
-            }else{
-
             }
         }
-
-        // Lance l'activité pour choisir une image
 
     }
 
@@ -204,12 +196,10 @@ public class AddMemoryFragment extends Fragment {
         if (ActivityCompat.checkSelfPermission( context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
             Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             takeImageArl.launch(takePicture);
-        }else{
+        } else {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.CAMERA)){
                 String[] permissions = {Manifest.permission.CAMERA};
                 ActivityCompat.requestPermissions(context, permissions, 2);
-            }else{
-
             }
         }
 

@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements MemoryListFragmen
 
     @Override
     public void onSelectedMemory(int memoryId) {
-
         MemoryFragment memoryFragment = new MemoryFragment(this, memoryId);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, memoryFragment).addToBackStack(null).commit();
         add_btn.setVisibility(View.GONE);

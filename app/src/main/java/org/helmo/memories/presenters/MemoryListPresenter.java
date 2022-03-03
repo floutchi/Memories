@@ -30,10 +30,6 @@ public class MemoryListPresenter {
         });
     }
 
-    public Memory getMemory(int position) {
-        return memories.get(position);
-    }
-
     public void addMemory(String title, String description, String imagePath, String date, double lattitude, double longitude) throws Exception {
         Memory memory = MemoryFactories.createMemory(title, description, imagePath, date, lattitude, longitude);
         memories.add(memory);

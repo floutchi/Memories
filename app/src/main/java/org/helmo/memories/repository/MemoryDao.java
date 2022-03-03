@@ -23,12 +23,13 @@ public interface MemoryDao {
     @Insert
     void insertMemory(Memory... memories);
 
-    @Update
-    void update(Memory memory);
+    @Query("UPDATE Memory SET favorite = 1")
+    void setFavorite(int id);
 
-    @Delete
-    void delete(Memory memory);
+    @Query("UPDATE Memory SET favorite = 0")
+    void setUnFavorite(int id);
 
-    @Query("DELETE FROM Memory WHERE uid = (:uuid)")
-    void deleteByUUID(int uuid);
+
+    @Query("DELETE FROM Memory WHERE uid = (:id)")
+    void deleteByID(int id);
 }

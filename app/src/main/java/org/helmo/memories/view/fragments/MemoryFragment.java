@@ -8,10 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Delete;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +29,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.helmo.memories.R;
+import org.helmo.memories.presenters.MemoryListPresenter;
 import org.helmo.memories.presenters.MemoryPresenter;
+import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.view.viewmodel.MemoryViewModel;
 
 import java.io.File;
@@ -40,18 +45,18 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
     ImageView imageView;
     MapView mapView;
 
-    Context context;
+    ImageButton deleteBtn;
+    ImageButton favBtn;
+
+    MainActivity context;
     private int memoryId;
 
     private MemoryPresenter memoryPresenter;
+    private MemoryListPresenter memoryListPresenter;
 
-    public MemoryFragment (Context context, int memoryId) {
+    public MemoryFragment(MainActivity context, int memoryId) {
         this.context = context;
         this.memoryId = memoryId;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
     }
 
 
@@ -64,13 +69,24 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
         dateView = view.findViewById(R.id.dateMemory);
         imageView = view.findViewById(R.id.imageMemory);
 
+        deleteBtn = view.findViewById(R.id.deleteBtn);
+        deleteBtn.setOnClickListener(view -> {
+           memoryPresenter.deleteMemory(memoryId);
+           context.onBackPressed();
+        });
+        favBtn = view.findViewById(R.id.favoriteBtn);
+        favBtn.setOnClickListener(view -> {
+            //TODO
+        });
+
+
         MemoryViewModel memoryViewModel = new ViewModelProvider(requireActivity()).get(MemoryViewModel.class);
         if(memoryViewModel.getMemoryId() == 0 || memoryId != memoryViewModel.getMemoryId()) {
             memoryViewModel.setMemoryId(memoryId);
         } else {
             memoryId = memoryViewModel.getMemoryId();
         }
-        memoryPresenter = new MemoryPresenter(this);
+        memoryPresenter = new MemoryPresenter(this, memoryListPresenter);
         memoryPresenter.loadMemory(memoryId);
 
         return view;
@@ -98,7 +114,6 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
                 googleMap.addMarker(new MarkerOptions().position(pos));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 16.0f));
             });
-
         }
     }
 }

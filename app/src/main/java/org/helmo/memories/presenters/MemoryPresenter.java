@@ -7,6 +7,7 @@ import org.helmo.memories.repository.MemoryRepository;
 public class MemoryPresenter {
 
     IMemoryScreen memoryScreen;
+    MemoryListPresenter memoryListPresenter;
     private Memory memory;
 
 
@@ -19,19 +20,30 @@ public class MemoryPresenter {
     }
 
 
-    public MemoryPresenter(IMemoryScreen memoryScreen) {
+    public MemoryPresenter(IMemoryScreen memoryScreen, MemoryListPresenter memoryListPresenter) {
         this.memoryScreen = memoryScreen;
+        this.memoryListPresenter = memoryListPresenter;
     }
 
 
     public void loadMemory(int position) {
         MemoryRepository.getInstance().getMemoryById(position).observeForever(memory -> {
-            this.memory = memory;
-            memoryScreen.showEntireMemory(memory.getTitle(),
-                    memory.getDescription(),
-                    memory.getImagePath(),
-                    memory.getDate(),
-                    memory.getLattitude(), memory.getLongitude()); //TODO
+            if(memory != null) {
+                this.memory = memory;
+                memoryScreen.showEntireMemory(memory.getTitle(),
+                        memory.getDescription(),
+                        memory.getImagePath(),
+                        memory.getDate(),
+                        memory.getLattitude(), memory.getLongitude());
+            }
         });
+    }
+
+    public void deleteMemory(int id) {
+        MemoryRepository.getInstance().deleteMemory(id);
+    }
+
+    public void setFavorite(int id) {
+        MemoryRepository.getInstance().setFavorite(id);
     }
 }

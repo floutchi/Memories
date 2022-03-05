@@ -1,6 +1,15 @@
 package org.helmo.memories.view.fragments;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ImageDecoder;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.InetAddresses;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +38,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.helmo.memories.BuildConfig;
 import org.helmo.memories.R;
 import org.helmo.memories.presenters.MemoryListPresenter;
 import org.helmo.memories.presenters.MemoryPresenter;
@@ -33,7 +46,11 @@ import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.view.viewmodel.MemoryViewModel;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Paths;
 
 public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryScreen {
 
@@ -131,9 +148,18 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
 
     }
 
-    private void shareImage(){
+    private void shareImage() {
 
+        Uri imageUri = Uri.parse(path);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "Hello");
+        intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(intent);
 
     }
+
 
 }

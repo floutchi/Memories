@@ -35,6 +35,10 @@ public class MemoryRepository {
         executor.execute(() -> memoryDao.setFavorite(id));
     }
 
+    public void setUnFavorite(int id) {
+        executor.execute(() -> memoryDao.setUnFavorite(id));
+    }
+
     public static MemoryRepository getInstance() {
         if(instance == null) {
             instance = new MemoryRepository();

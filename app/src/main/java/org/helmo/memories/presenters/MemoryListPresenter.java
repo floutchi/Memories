@@ -12,7 +12,7 @@ public class MemoryListPresenter {
     private final IMemoryListScreen screen;
 
     public interface IMemoryItemScreen {
-        void showMemory(int id, String title, String description, String imagePath, String date);
+        void showMemory(int id, String title, String description, String imagePath, String date, boolean favorite);
     }
 
     public interface IMemoryListScreen {
@@ -51,7 +51,7 @@ public class MemoryListPresenter {
 
     public void showMemoryOn(IMemoryItemScreen holder, int position) {
         Memory m = memories.get(position);
-        holder.showMemory(m.getUid(), m.getTitle(), m.getDescription(), m.getImagePath(), m.getDate());
+        holder.showMemory(m.getUid(), m.getTitle(), m.getDescription(), m.getImagePath(), m.getDate(), m.isFavorite());
     }
 
 }

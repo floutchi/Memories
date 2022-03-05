@@ -16,7 +16,8 @@ public class MemoryPresenter {
                               String description,
                               String imagePath,
                               String date,
-                              double lattitude, double longitude);
+                              double lattitude, double longitude,
+                              boolean favorit);
     }
 
 
@@ -34,7 +35,8 @@ public class MemoryPresenter {
                         memory.getDescription(),
                         memory.getImagePath(),
                         memory.getDate(),
-                        memory.getLattitude(), memory.getLongitude());
+                        memory.getLattitude(), memory.getLongitude(),
+                        memory.isFavorite());
             }
         });
     }
@@ -44,6 +46,11 @@ public class MemoryPresenter {
     }
 
     public void setFavorite(int id) {
-        MemoryRepository.getInstance().setFavorite(id);
+        if (memory.isFavorite()){
+            MemoryRepository.getInstance().setUnFavorite(id);
+        }else {
+            MemoryRepository.getInstance().setFavorite(id);
+        }
+
     }
 }

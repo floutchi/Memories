@@ -49,6 +49,7 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Vi
         Activity context;
         MemoryListFragment.ISelectMemory callbacks;
         private ImageView memoryImage;
+        private ImageView memoryFavorit;
         private TextView memoryTitle;
         private TextView memoryDescription;
         private TextView memoryDate;
@@ -61,14 +62,14 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Vi
             this.memoryTitle = view.findViewById(R.id.memoryTitle);
             this.memoryDescription = view.findViewById(R.id.memoryDescription);
             this.memoryDate = view.findViewById(R.id.memoryDate);
-
+            this.memoryFavorit =  view.findViewById(R.id.memoryFavorit);
             view.setOnClickListener(v -> {
                 callbacks.onSelectedMemory(id);
             });
         }
 
         @Override
-        public void showMemory(int id, String title, String description, String imagePath, String date) {
+        public void showMemory(int id, String title, String description, String imagePath, String date, boolean favorite) {
             this.id = id;
 
             memoryTitle.setText(title);
@@ -87,6 +88,12 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Vi
                     Glide.with(context).load(imageUri).into(memoryImage); // Remplacer l'image par défaut par le fichier trouvé
                 }
             }
+            if (favorite){
+                memoryFavorit.setImageResource(R.drawable.ic_star);
+            }else{
+                memoryFavorit.setImageResource(R.drawable.ic_unstar);
+            }
+
         }
     }
 

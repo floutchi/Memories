@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface MemoryDao {
 
-    @Query("SELECT * FROM Memory")
+    @Query("SELECT * FROM Memory ORDER BY favorite DESC")
     LiveData<List<Memory>> getAllMemories();
 
     @Query("SELECT * FROM Memory WHERE uid = (:id)")
@@ -23,10 +23,10 @@ public interface MemoryDao {
     @Insert
     void insertMemory(Memory... memories);
 
-    @Query("UPDATE Memory SET favorite = 1")
+    @Query("UPDATE Memory SET favorite = 1 WHERE uid = (:id) ")
     void setFavorite(int id);
 
-    @Query("UPDATE Memory SET favorite = 0")
+    @Query("UPDATE Memory SET favorite = 0 WHERE uid = (:id)")
     void setUnFavorite(int id);
 
 

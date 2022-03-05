@@ -1,19 +1,17 @@
 package org.helmo.memories.view.fragments;
-
-import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.Delete;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +33,7 @@ import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.view.viewmodel.MemoryViewModel;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryScreen {
 
@@ -47,9 +46,12 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
 
     ImageButton deleteBtn;
     ImageButton favBtn;
+    ImageButton shareBtn;
 
     MainActivity context;
     private int memoryId;
+
+    String path;
 
     private MemoryPresenter memoryPresenter;
     private MemoryListPresenter memoryListPresenter;
@@ -76,9 +78,13 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
         });
         favBtn = view.findViewById(R.id.favoriteBtn);
         favBtn.setOnClickListener(view -> {
-            //TODO
+            memoryPresenter.setFavorite(memoryId);
+            memoryPresenter.loadMemory(memoryId);
         });
-
+        shareBtn = view.findViewById(R.id.shareBtn);
+        shareBtn.setOnClickListener(view ->{
+            shareImage();
+        });
 
         MemoryViewModel memoryViewModel = new ViewModelProvider(requireActivity()).get(MemoryViewModel.class);
         if(memoryViewModel.getMemoryId() == 0 || memoryId != memoryViewModel.getMemoryId()) {
@@ -93,17 +99,23 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
     }
 
     @Override
-    public void showEntireMemory(String title, String description, String imagePath, String date, double lattitude, double longitude) {
+    public void showEntireMemory(String title, String description, String imagePath, String date, double lattitude, double longitude, boolean favorit) {
         titleView.setText(title);
         descriptionView.setText(description);
         dateView.setText(date);
-
+        path = imagePath;
         if(imagePath != null) {
             File imgFile = new File(imagePath);
             if(imgFile.exists()) {
                 Uri imageUri = Uri.fromFile(imgFile);
                 Glide.with(context).load(imageUri).into(imageView); // Remplacer l'image par défaut par le fichier trouvé
             }
+        }
+
+        if (favorit){
+            favBtn.setImageResource(R.drawable.ic_star);
+        }else{
+            favBtn.setImageResource(R.drawable.ic_unstar);
         }
 
         if(lattitude != 0.0 && longitude != 0.0) {
@@ -115,5 +127,13 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 16.0f));
             });
         }
+
+
     }
+
+    private void shareImage(){
+
+
+    }
+
 }

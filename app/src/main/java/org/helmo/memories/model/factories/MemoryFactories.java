@@ -17,9 +17,9 @@ public class MemoryFactories {
     }
 
     private static double onVerifyGPS(double cord) throws Exception {
-        if (cord == 0.0d){
+        /*if (cord == 0.0d){
             throw new Exception("Lieu manquant");
-        }
+        }*/
         return cord;
     }
 

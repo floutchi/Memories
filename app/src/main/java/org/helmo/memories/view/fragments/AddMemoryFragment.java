@@ -281,7 +281,6 @@ public class AddMemoryFragment extends Fragment {
         ContextWrapper contextWrapper = new ContextWrapper(context);
         File dir = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
         File path = new File(dir, UUID.randomUUID()+".png");
-        System.err.println( "test : "+path.toString());
         try {
             memoryImagePath = path.toString();
             FileOutputStream fos = new FileOutputStream(path);

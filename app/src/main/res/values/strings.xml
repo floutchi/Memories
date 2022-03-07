@@ -26,6 +26,7 @@
     <string name="action_geolocate">Pick Place</string>
     <string name="default_info_title">Default Location</string>
     <string name="confirm">Confirmer cette position</string>
+    <string name="loading">Recherche de votre position en cours</string>
 
     <!-- Texte d'un souvenir -->
     <string name="title_memory">Titre du souvenir</string>

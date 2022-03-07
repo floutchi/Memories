@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.helmo.memories.R;
 import org.helmo.memories.databinding.ActivityMapsBinding;
+import org.helmo.memories.view.dialog.LoadingDialog;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -55,6 +57,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        LoadingDialog loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoadingDialog();
+
         mMap = googleMap;
         mMap.setOnMapClickListener(latLng -> {
             marker.remove();
@@ -66,6 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         while(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
+
         locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
@@ -73,11 +79,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 currentPos = new LatLng(location.getLatitude(), location.getLongitude());
                 marker = mMap.addMarker(new MarkerOptions().position(currentPos).title("Votre position"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, 16.0f));
+                loadingDialog.dismissDialog();
             }
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {}
         }, null);
-
-
     }
 }

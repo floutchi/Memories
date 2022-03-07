@@ -9,32 +9,19 @@ public class MemoryFactories {
         String verifyTitle = onVerifyTitle(title);
         String verifyDecription = onVerifyDescription(description);
         String verifyDate = onVerifyDate(date);
-        double veryLattitude = onVerifyGPS(lattitude);
-        double veryLongitude = onVerifyGPS(longitude);
-        String verifyImagePath = onVerifyImagePath(imagePath);
+        double veryLattitude = lattitude;
+        double veryLongitude = longitude;
+        String verifyImagePath = imagePath;
         return new Memory(verifyTitle, verifyDecription, verifyImagePath, verifyDate, false, veryLattitude, veryLongitude);
 
     }
 
-    private static double onVerifyGPS(double cord) throws Exception {
-        /*if (cord == 0.0d){
-            throw new Exception("Lieu manquant");
-        }*/
-        return cord;
-    }
-
     private static String onVerifyDate(String date) throws Exception {
         if (!date.equals("Ajouter une date")){
-            return date.trim();
+            return "";
         }
-        throw new Exception("Date manquante");
-    }
 
-    private static String onVerifyImagePath(String imagePath) throws Exception {
-        if (!(imagePath == null)){
-            return imagePath.trim();
-        }
-        throw new Exception("Image manquante");
+        return date;
     }
 
     private static String onVerifyDescription(String description) throws Exception {

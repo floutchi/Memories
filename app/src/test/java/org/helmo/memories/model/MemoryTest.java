@@ -6,6 +6,12 @@ import static org.junit.Assert.*;
 public class MemoryTest {
 
     @Test
+    public void getId() {
+        Memory memory = new Memory("a","","","",false,1,1);
+        assertEquals(0, memory.getUid());
+    }
+
+    @Test
     public void getTitle() {
         Memory memory = new Memory("a","","","",false,1,1);
         assertEquals("a", memory.getTitle());
@@ -45,6 +51,14 @@ public class MemoryTest {
         Memory memory = new Memory("","","","a",true,1,1);
         assertEquals(1,memory.getLongitude(), 0);
     }
+
+    @Test
+    public void setId() {
+        Memory memory = new Memory("a","","","",false,1,1);
+        memory.setUid(1);
+        assertEquals(1, memory.getUid());
+    }
+
     @Test
     public void setDate() {
         Memory memory = new Memory("","","","a",true,1,1);

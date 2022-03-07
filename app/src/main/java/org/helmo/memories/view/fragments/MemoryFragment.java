@@ -1,4 +1,6 @@
 package org.helmo.memories.view.fragments;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -89,19 +91,16 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
         imageView = view.findViewById(R.id.imageMemory);
 
         deleteBtn = view.findViewById(R.id.deleteBtn);
-        deleteBtn.setOnClickListener(view -> {
-           memoryPresenter.deleteMemory(memoryId);
-           context.onBackPressed();
-        });
+        deleteBtn.setOnClickListener(view -> deleteMemoryConfirm());
+
         favBtn = view.findViewById(R.id.favoriteBtn);
         favBtn.setOnClickListener(view -> {
             memoryPresenter.setFavorite(memoryId);
             memoryPresenter.loadMemory(memoryId);
         });
+
         shareBtn = view.findViewById(R.id.shareBtn);
-        shareBtn.setOnClickListener(view ->{
-            shareImage();
-        });
+        shareBtn.setOnClickListener(view -> shareImage());
 
         MemoryViewModel memoryViewModel = new ViewModelProvider(requireActivity()).get(MemoryViewModel.class);
         if(memoryViewModel.getMemoryId() == 0 || memoryId != memoryViewModel.getMemoryId()) {
@@ -113,6 +112,20 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
         memoryPresenter.loadMemory(memoryId);
 
         return view;
+    }
+
+    private void deleteMemoryConfirm() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Etes-vous sûr de vouloir supprimer ce souvenir ?");
+        builder.setPositiveButton("Oui", (dialogInterface, i) -> {
+            memoryPresenter.deleteMemory(memoryId);
+            context.onBackPressed();
+        });
+
+        builder.setNegativeButton("Non", (dialogInterface, i) -> { });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override

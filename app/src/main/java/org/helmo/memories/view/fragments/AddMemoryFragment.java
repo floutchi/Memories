@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.helmo.memories.R;
@@ -123,10 +124,27 @@ public class AddMemoryFragment extends Fragment {
         // Ajout du lieu
         add_place.setOnClickListener(view -> selectPlace());
 
-
         // Bouton final d'ajout du souvenir
         add_memory.setOnClickListener(view -> addMemory());
         return view;
+    }
+
+    public void setEditBtn(String title, String description,
+                           String imagePath, String date,
+                           double lattitude, double longitude) {
+        add_name.setText(title);
+        add_description.setText(description);
+        add_date.setText(date);
+        add_place.setText("COORDONEES: LAT " + lattitude + "LONG " + longitude);
+        if(imagePath != null) {
+            File imgFile = new File(imagePath);
+            if(imgFile.exists()) {
+                Uri imageUri = Uri.fromFile(imgFile);
+                Glide.with(context).load(imageUri).into(memory_image); // Remplacer l'image par défaut par le fichier trouvé
+            }
+        }
+
+        add_memory.setText("Modifier le souvenir");
     }
 
     private void addMemory() {

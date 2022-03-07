@@ -1,7 +1,5 @@
 package org.helmo.memories.view.viewmodel;
 
-import android.view.View;
-
 import androidx.lifecycle.ViewModel;
 
 public class MemoryViewModel extends ViewModel {

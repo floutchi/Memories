@@ -48,7 +48,7 @@ public class MemoryPresenter {
     public void setFavorite(int id) {
         if (memory.isFavorite()){
             MemoryRepository.getInstance().setUnFavorite(id);
-        }else {
+        } else {
             MemoryRepository.getInstance().setFavorite(id);
         }
 

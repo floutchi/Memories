@@ -1,4 +1,4 @@
-package org.helmo.memories;
+package org.helmo.memories.model;
 
 import org.helmo.memories.model.Memory;
 import org.junit.Test;

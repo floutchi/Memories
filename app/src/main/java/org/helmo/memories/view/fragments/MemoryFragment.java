@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
@@ -61,11 +62,11 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
     TextView descriptionView;
     TextView dateView;
     ImageView imageView;
-    MapView mapView;
 
     ImageButton deleteBtn;
     ImageButton favBtn;
     ImageButton shareBtn;
+    ImageButton editBtn;
 
     MainActivity context;
     private int memoryId;
@@ -74,6 +75,7 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
 
     private MemoryPresenter memoryPresenter;
     private MemoryListPresenter memoryListPresenter;
+
 
     public MemoryFragment(MainActivity context, int memoryId) {
         this.context = context;
@@ -85,6 +87,7 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.memory_fragment, container, false);
+
         titleView = view.findViewById(R.id.titleMemory);
         descriptionView = view.findViewById(R.id.descriptionMemory);
         dateView = view.findViewById(R.id.dateMemory);
@@ -102,6 +105,10 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
         shareBtn = view.findViewById(R.id.shareBtn);
         shareBtn.setOnClickListener(view -> shareImage());
 
+        editBtn = view.findViewById(R.id.editBtn);
+        editBtn.setOnClickListener(view -> editMemory());
+
+
         MemoryViewModel memoryViewModel = new ViewModelProvider(requireActivity()).get(MemoryViewModel.class);
         if(memoryViewModel.getMemoryId() == 0 || memoryId != memoryViewModel.getMemoryId()) {
             memoryViewModel.setMemoryId(memoryId);
@@ -112,6 +119,13 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
         memoryPresenter.loadMemory(memoryId);
 
         return view;
+    }
+
+    private void editMemory() {
+        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new AddMemoryFragment(context, memoryListPresenter));
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private void deleteMemoryConfirm() {
@@ -129,7 +143,10 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
     }
 
     @Override
-    public void showEntireMemory(String title, String description, String imagePath, String date, double lattitude, double longitude, boolean favorit) {
+    public void showEntireMemory(String title, String description,
+                                 String imagePath, String date,
+                                 double lattitude, double longitude,
+                                 boolean favorite) {
         titleView.setText(title);
         descriptionView.setText(description);
         dateView.setText(date);
@@ -142,7 +159,7 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
             }
         }
 
-        if (favorit){
+        if (favorite){
             favBtn.setImageResource(R.drawable.ic_star);
         }else{
             favBtn.setImageResource(R.drawable.ic_unstar);
@@ -157,7 +174,6 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 16.0f));
             });
         }
-
 
     }
 

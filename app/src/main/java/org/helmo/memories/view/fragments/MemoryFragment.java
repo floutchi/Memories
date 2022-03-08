@@ -73,8 +73,11 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
 
     String path;
 
+    Uri imageUri;
+
     private MemoryPresenter memoryPresenter;
     private MemoryListPresenter memoryListPresenter;
+    private double lattitude; private double longitude;
 
 
     public MemoryFragment(MainActivity context, int memoryId) {
@@ -123,7 +126,9 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
 
     private void editMemory() {
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new AddMemoryFragment(context, memoryListPresenter));
+        transaction.replace(R.id.fragment_container,
+                new EditMemoryFragment(context, memoryPresenter, titleView.getText().toString(), descriptionView.getText().toString(),
+                        imageUri, dateView.getText().toString(), lattitude, longitude));
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -151,10 +156,12 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
         descriptionView.setText(description);
         dateView.setText(date);
         path = imagePath;
+        this.lattitude = lattitude;
+        this.longitude = longitude;
         if(imagePath != null) {
             File imgFile = new File(imagePath);
             if(imgFile.exists()) {
-                Uri imageUri = Uri.fromFile(imgFile);
+                imageUri = Uri.fromFile(imgFile);
                 Glide.with(context).load(imageUri).into(imageView); // Remplacer l'image par défaut par le fichier trouvé
             }
         }

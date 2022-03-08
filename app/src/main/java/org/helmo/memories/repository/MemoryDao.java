@@ -23,6 +23,19 @@ public interface MemoryDao {
     @Insert
     void insertMemory(Memory... memories);
 
+    @Query("UPDATE Memory SET " +
+            "title = (:title), " +
+            "description = (:description), " +
+            "imagePath = (:imagePath), " +
+            "date = (:date), " +
+            "lattitude = (:lattitude), " +
+            "longitude = (:longitude)" +
+            "WHERE uid = (:id)")
+    void updateMemory(int id,
+                      String title, String description,
+                      String imagePath, String date,
+                      double lattitude, double longitude);
+
     @Query("UPDATE Memory SET favorite = 1 WHERE uid = (:id) ")
     void setFavorite(int id);
 

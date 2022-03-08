@@ -117,6 +117,10 @@ public class Memory {
      */
     public void setDescription(String description) {this.description = description; }
 
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     /**
      * Change la date du souvenir
      * @param date

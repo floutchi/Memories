@@ -17,7 +17,7 @@ public class MemoryFactories {
     }
 
     private static String onVerifyDate(String date) throws Exception {
-        if (!date.equals("Ajouter une date")){
+        if (date.equals("Ajouter une date")){
             return "";
         }
 

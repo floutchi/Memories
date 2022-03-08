@@ -35,6 +35,15 @@ public class MemoryRepository {
         executor.execute(() -> memoryDao.insertMemory(memory));
     }
 
+    public void updateMemory(int id, String title,
+                             String description,
+                             String imagePath,
+                             String date,
+                             double lattitude, double longitude) {
+        executor.execute(() -> memoryDao.updateMemory(id, title, description, imagePath, date, lattitude, longitude));
+
+    }
+
     public void setFavorite(int id) {
         executor.execute(() -> memoryDao.setFavorite(id));
     }

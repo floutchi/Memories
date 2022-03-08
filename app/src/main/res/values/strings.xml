@@ -32,4 +32,7 @@
     <string name="title_memory">Titre du souvenir</string>
     <string name="search" > Recherche un souvenir</string>
 
+    <!-- Texte d'édition d'un souvenir -->
+    <string name="edit_memory">Editer le souvenir</string>
+
 </resources>

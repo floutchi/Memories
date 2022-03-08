@@ -1,5 +1,6 @@
 package org.helmo.memories.view.fragments;
 
+import static org.helmo.memories.view.fragments.AddMemoryFragment.DIALOG_DATE;
 
 import android.Manifest;
 import android.app.Activity;
@@ -7,16 +8,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -35,19 +29,17 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.helmo.memories.R;
-import org.helmo.memories.presenters.MemoryListPresenter;
+import org.helmo.memories.presenters.MemoryPresenter;
 import org.helmo.memories.utils.DateFormatter;
 import org.helmo.memories.view.activities.MainActivity;
 import org.helmo.memories.view.activities.MapsActivity;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -58,56 +50,82 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-public class AddMemoryFragment extends Fragment {
+public class EditMemoryFragment extends Fragment {
 
-    protected static final String DIALOG_DATE = "DialogDate";
+    //TODO : Impossible de changer l'image ???
+
+
     View view;
+    String title; String description;
+    Uri imageUri;
+    String date;
+    double lattitude; double longitude;
+
+    ImageView image;
+    String memoryImagePath;
 
     EditText add_name;
     EditText add_description;
 
     Button add_date;
     Button add_place;
-    double longitude;
-    double lattitude;
     Button add_pic;
     Button take_pic;
 
-    ImageView memory_image;
-    String memoryImagePath;
-
-    Button add_memory;
+    Button edit_memory;
 
     MainActivity context;
-    MemoryListPresenter memoryListPresenter;
+    MemoryPresenter memoryPresenter;
 
     ActivityResultLauncher<Intent> takeImageArl;
     ActivityResultLauncher<Intent> pickImageArl;
     ActivityResultLauncher<Intent> pickPlaceArl;
 
-    public AddMemoryFragment(MainActivity context, MemoryListPresenter memoryListPresenter) {
+    public EditMemoryFragment(MainActivity context, MemoryPresenter memoryPresenter, String title, String description,
+                              Uri imageUri, String date,
+                              double lattitude, double longitude) {
+
         this.context = context;
-        this.memoryListPresenter = memoryListPresenter;
+        this.memoryPresenter = memoryPresenter;
+        this.title = title;
+        this.description = description;
+        this.imageUri = imageUri;
+        this.date = date;
+        this.lattitude = lattitude;
+        this.longitude = longitude;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.add_memory_fragment, container, false);
-
         // Recuperer les boutons
         add_date = view.findViewById(R.id.addDateBtn);
         add_place = view.findViewById(R.id.addPlaceBtn);
         add_pic = view.findViewById(R.id.addPicBtn);
         take_pic = view.findViewById(R.id.takePicBtn);
-        add_memory = view.findViewById(R.id.addMemoryBtn);
+        edit_memory = view.findViewById(R.id.addMemoryBtn);
 
         // Récupérer les EditText
         add_name = view.findViewById(R.id.addName);
         add_description = view.findViewById(R.id.addDescription);
 
         // Récupérer l'image
-        memory_image = view.findViewById(R.id.memoryImage);
+        image = view.findViewById(R.id.memoryImage);
+
+        // Modifier les textes
+        edit_memory.setText(getResources().getString(R.string.edit_memory));
+        add_name.setText(title);
+        add_description.setText(description);
+        if(!date.isEmpty()) {
+            add_date.setText(date);
+        }
+
+        Glide.with(context).load(imageUri).into(image);
+
+        if(lattitude != 0 && longitude != 0) {
+            add_place.setText("Coordonées : LAT " + lattitude + "LON " + longitude);
+        }
 
         // Set onClick des boutons
         // Ajout de la date
@@ -121,31 +139,22 @@ public class AddMemoryFragment extends Fragment {
         // Ajout du lieu
         add_place.setOnClickListener(view -> selectPlace());
 
-        // Bouton final d'ajout du souvenir
-        add_memory.setOnClickListener(view -> addMemory());
+        edit_memory.setOnClickListener(view -> editMemory());
+
         return view;
     }
 
-    private void addMemory() {
+    private void editMemory() {
         try {
-            memoryListPresenter.addMemory(add_name.getText().toString(), add_description.getText().toString(), memoryImagePath, add_date.getText().toString(), this.lattitude, this.longitude);
-            add_name.setText("");
-            add_description.setText("");
-            add_date.setText("");
-            pickImageArl = null;
-            lattitude = 0.0;
-            longitude = 0.0d;
-
+            memoryPresenter.editMemory(add_name.getText().toString(), add_description.getText().toString(), memoryImagePath, add_date.getText().toString(), this.lattitude, this.longitude);
             context.onBackPressed();
-        } catch (Exception ex){
+        } catch (Exception e) {
             new AlertDialog.Builder(context)
                     .setTitle("Erreur")
-                    .setMessage(ex.getMessage())
+                    .setMessage(e.getMessage())
                     .show();
         }
-
     }
-
 
     private void selectPlace() {
 
@@ -166,12 +175,12 @@ public class AddMemoryFragment extends Fragment {
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(DateFormatter.toDate(dateFormat.format(date)));
-        getParentFragmentManager().setFragmentResultListener(DatePickerFragment.RESULT_DATE, AddMemoryFragment.this, (requestKey, bundle) -> {
+        getParentFragmentManager().setFragmentResultListener(DatePickerFragment.RESULT_DATE, EditMemoryFragment.this, (requestKey, bundle) -> {
             Date result = (Date) bundle.getSerializable("bundleKey");
             add_date.setText(DateFormatter.fromDate(result));
         });
 
-        datePickerFragment.show(AddMemoryFragment.this.getParentFragmentManager(), DIALOG_DATE);
+        datePickerFragment.show(EditMemoryFragment.this.getParentFragmentManager(), DIALOG_DATE);
     }
 
     private void pickupImage() {
@@ -190,7 +199,7 @@ public class AddMemoryFragment extends Fragment {
 
     private void takeImage() {
         // Lance l'activité pour prendre une photo
-        if (ActivityCompat.checkSelfPermission( context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
             Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             takeImageArl.launch(takePicture);
         } else {
@@ -224,8 +233,8 @@ public class AddMemoryFragment extends Fragment {
             Uri selectedImage = result.getData().getData();
 
             // Mettre à jour l'aperçu de l'image
-            memory_image.setImageURI(selectedImage);
-            memory_image.setVisibility(View.VISIBLE);
+            image.setImageURI(selectedImage);
+            image.setVisibility(View.VISIBLE);
             memoryImagePath = getRealPathFromURI(selectedImage); // A ajouter à l'objet Memory lors de l'ajout
         }
     }
@@ -238,8 +247,8 @@ public class AddMemoryFragment extends Fragment {
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 // Mettre à jour l'aperçu de l'image
-                memory_image.setImageBitmap(imageBitmap);
-                memory_image.setVisibility(View.VISIBLE);
+                image.setImageBitmap(imageBitmap);
+                image.setVisibility(View.VISIBLE);
                 if(ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
                 }

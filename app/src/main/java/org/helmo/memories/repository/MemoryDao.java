@@ -29,7 +29,9 @@ public interface MemoryDao {
     @Query("UPDATE Memory SET favorite = 0 WHERE uid = (:id)")
     void setUnFavorite(int id);
 
-
     @Query("DELETE FROM Memory WHERE uid = (:id)")
     void deleteByID(int id);
+
+    @Query("SELECT * FROM Memory WHERE title like :word ")
+    LiveData<List<Memory>> filterMemory(String word);
 }

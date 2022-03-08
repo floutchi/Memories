@@ -16,8 +16,10 @@ public class MemoryListPresenter {
     }
 
     public interface IMemoryListScreen {
-        void refreshView(); // Pour rafraichir la vue
+        void refreshView(List<Memory> memories); // Pour rafraichir la vue
+        void refreshView();
     }
+
 
     public MemoryListPresenter(IMemoryListScreen screen) {
         this.screen = screen;
@@ -30,11 +32,18 @@ public class MemoryListPresenter {
         });
     }
 
+    public void filterMemory(String word) {
+        MemoryRepository.getInstance().filterMemory(word).observeForever(memories -> {
+            this.memories = memories;
+            screen.refreshView(memories);
+        });
+    }
+
     public void addMemory(String title, String description, String imagePath, String date, double lattitude, double longitude) throws Exception {
         Memory memory = MemoryFactories.createMemory(title, description, imagePath, date, lattitude, longitude);
         memories.add(memory);
         MemoryRepository.getInstance().insertMemory(memory);
-        screen.refreshView();
+        screen.refreshView(memories);
     }
 
     public int getItemCount() {
@@ -54,4 +63,8 @@ public class MemoryListPresenter {
         holder.showMemory(m.getUid(), m.getTitle(), m.getDescription(), m.getImagePath(), m.getDate(), m.isFavorite());
     }
 
+
+    public void setMemories(List<Memory> memories) {
+        this.memories = memories;
+    }
 }

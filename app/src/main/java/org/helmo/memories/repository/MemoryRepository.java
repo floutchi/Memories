@@ -21,6 +21,10 @@ public class MemoryRepository {
         return memoryDao.getAllMemories();
     }
 
+    public LiveData<List<Memory>> filterMemory(String word) {
+        return memoryDao.filterMemory("%"+word+"%");
+    }
+
     public LiveData<Memory> getMemoryById(int id) { return memoryDao.getMemory(id);}
 
     public void deleteMemory(int id) {

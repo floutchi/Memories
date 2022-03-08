@@ -30,6 +30,6 @@
 
     <!-- Texte d'un souvenir -->
     <string name="title_memory">Titre du souvenir</string>
-
+    <string name="search" > Recherche un souvenir</string>
 
 </resources>

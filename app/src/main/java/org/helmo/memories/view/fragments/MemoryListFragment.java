@@ -60,6 +60,12 @@ public class MemoryListFragment extends Fragment implements MemoryListPresenter.
     }
 
     @Override
+    public void refreshView(List<Memory> memories) {
+        memoryListPresenter.setMemories(memories);
+        horizontalRecyclerView.setAdapter(new MemoryListAdapter(context, memoryListPresenter, callback));
+    }
+
+    @Override
     public void refreshView() {
         horizontalRecyclerView.setAdapter(new MemoryListAdapter(context, memoryListPresenter, callback));
     }

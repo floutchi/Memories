@@ -60,9 +60,19 @@ public class MainActivity extends AppCompatActivity implements MemoryListFragmen
 
     @Override
     public void onBackPressed() {
-        add_btn.setVisibility(View.VISIBLE); // Permet de rendre à nouveau visible le bouton + lors du retour en arrière
-        sreachView.setVisibility(View.VISIBLE); // Permet de rendre à nouveau visible le bouton + lors du retour en arrière
-        super.onBackPressed();
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 2) {
+            add_btn.setVisibility(View.VISIBLE); // Permet de rendre à nouveau visible le bouton + lors du retour en arrière
+            sreachView.setVisibility(View.VISIBLE); // Permet de rendre à nouveau visible le bouton + lors du retour en arrière
+        }
+        if (count == 1){
+            super.onBackPressed();
+            super.onBackPressed();
+        }else {
+            super.onBackPressed();
+        }
+
     }
 
     @Override
@@ -70,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements MemoryListFragmen
         MemoryFragment memoryFragment = new MemoryFragment(this, memoryId);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, memoryFragment).addToBackStack(null).commit();
         add_btn.setVisibility(View.GONE);
+        sreachView.setVisibility(View.GONE);
     }
 
     @Override
@@ -93,5 +104,7 @@ public class MainActivity extends AppCompatActivity implements MemoryListFragmen
         });
         return super.onCreateOptionsMenu(menu);
     }
+
+
 
 }

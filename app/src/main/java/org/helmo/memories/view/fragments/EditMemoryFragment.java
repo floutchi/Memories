@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -50,7 +51,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-public class EditMemoryFragment extends Fragment {
+public class EditMemoryFragment extends Fragment  {
 
     //TODO : Impossible de changer l'image ???
 
@@ -121,6 +122,7 @@ public class EditMemoryFragment extends Fragment {
             add_date.setText(date);
         }
 
+        image.setVisibility(View.VISIBLE);
         Glide.with(context).load(imageUri).into(image);
 
         if(lattitude != 0 && longitude != 0) {
@@ -296,4 +298,5 @@ public class EditMemoryFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
 }

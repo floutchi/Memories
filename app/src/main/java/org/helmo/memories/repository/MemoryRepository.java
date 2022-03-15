@@ -15,7 +15,7 @@ public class MemoryRepository {
     private final MemoryDao memoryDao = MemoryDataBase.getInstance().memoryDao();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    private MemoryRepository() {}
+    public MemoryRepository() {}
 
     public LiveData<List<Memory>> getMemories() {
         return memoryDao.getAllMemories();

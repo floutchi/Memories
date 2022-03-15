@@ -91,7 +91,11 @@ public class EditMemoryFragment extends Fragment  {
         this.title = title;
         this.description = description;
         this.imageUri = imageUri;
-        this.memoryImagePath = imageUri.getPath();
+        if(imageUri != null) {
+            this.memoryImagePath = imageUri.getPath();
+        }
+
+
         this.date = date;
         this.lattitude = lattitude;
         this.longitude = longitude;

@@ -37,7 +37,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
-import com.bumptech.glide.Glide;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import org.helmo.memories.R;

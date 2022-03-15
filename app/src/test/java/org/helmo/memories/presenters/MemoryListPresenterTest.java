@@ -1,11 +1,23 @@
 package org.helmo.memories.presenters;
 
+import org.helmo.memories.MemoriesApplication;
 import org.helmo.memories.model.Memory;
+import org.helmo.memories.model.factories.MemoryFactories;
+import org.helmo.memories.repository.MemoryDataBase;
+import org.helmo.memories.repository.MemoryRepository;
 import org.junit.Test;
+import org.junit.runner.manipulation.Ordering;
+import org.mockito.Mock;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import android.app.Application;
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MemoryListPresenterTest {
@@ -36,5 +48,73 @@ public class MemoryListPresenterTest {
         //Then
         assertNull(itemList);
     }
+
+
+    @Test
+    public void verifyLoadMemoryList()  {
+        // Given
+        MemoryListPresenter.IMemoryListScreen mockedMemoryListScreen = mock(MemoryListPresenter.IMemoryListScreen.class);
+        MemoryListPresenter memoryListPresenter = mock(MemoryListPresenter.class);
+        MemoriesApplication memoriesApplication = mock(MemoriesApplication.class);
+
+        memoriesApplication.onCreate();
+
+        memoryListPresenter.loadMemories();
+        verify(memoryListPresenter).loadMemories();
+
+    }
+
+    @Test
+    public void verifyToAddElementMemoryList() throws Exception {
+        // Given
+        MemoryListPresenter.IMemoryListScreen mockedMemoryListScreen = mock(MemoryListPresenter.IMemoryListScreen.class);
+        MemoryListPresenter memoryListPresenter = mock(MemoryListPresenter.class);
+        MemoriesApplication memoriesApplication = mock(MemoriesApplication.class);
+
+        memoriesApplication.onCreate();
+
+        memoryListPresenter.addMemory("rezr","fezrz","efzef","fez",5,5);
+
+        verify(memoryListPresenter).addMemory("rezr","fezrz","efzef","fez",5,5);
+
+    }
+
+    @Test
+    public void filterElementMemoryList()  {
+        // Given
+        MemoryListPresenter.IMemoryListScreen mockedMemoryListScreen = mock(MemoryListPresenter.IMemoryListScreen.class);
+        MemoryListPresenter memoryListPresenter = mock(MemoryListPresenter.class);
+        MemoriesApplication memoriesApplication = mock(MemoriesApplication.class);
+
+        memoriesApplication.onCreate();
+
+        memoryListPresenter.filterMemory("mots");
+
+        verify(memoryListPresenter).filterMemory("mots");
+
+    }
+
+    @Test
+    public void verifyshowMemoryOn()  {
+        // Given
+        MemoryListPresenter.IMemoryListScreen mockedMemoryListScreen = mock(MemoryListPresenter.IMemoryListScreen.class);
+        MemoryListPresenter.IMemoryItemScreen iMemoryItemScreen = mock(MemoryListPresenter.IMemoryItemScreen.class);
+        MemoryListPresenter memoryListPresenter = mock(MemoryListPresenter.class);
+
+
+        Memory memory =  new Memory("","","","",true, 5 ,5);
+        List<Memory> memories =  new ArrayList<>();
+        memories.add(memory);
+        memoryListPresenter.setMemories(memories);
+        // When
+
+
+        memoryListPresenter.showMemoryOn(iMemoryItemScreen, 0);
+
+        //Then
+        verify(memoryListPresenter).showMemoryOn(iMemoryItemScreen, 0);
+
+    }
+
 
 }

@@ -23,11 +23,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +42,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.helmo.memories.BuildConfig;
 import org.helmo.memories.R;
@@ -131,6 +134,9 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
                         imageUri, dateView.getText().toString(), lattitude, longitude));
         transaction.addToBackStack(null);
         transaction.commit();
+        FloatingActionButton add_btn = context.findViewById(R.id.add_btn);
+        add_btn.setVisibility(View.GONE);
+
     }
 
     private void deleteMemoryConfirm() {

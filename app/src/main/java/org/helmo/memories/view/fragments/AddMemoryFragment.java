@@ -220,7 +220,7 @@ public class AddMemoryFragment extends Fragment {
         // Résultat de l'activité pour choisir une image
         Intent data = result.getData();
         // Vérifier si les données sont nulles
-        if(data != null || data.getData() != null) {
+        if(data != null ) {
             Uri selectedImage = result.getData().getData();
 
             // Mettre à jour l'aperçu de l'image

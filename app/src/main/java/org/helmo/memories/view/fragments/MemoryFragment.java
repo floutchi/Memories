@@ -105,7 +105,7 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
         favBtn = view.findViewById(R.id.favoriteBtn);
         favBtn.setOnClickListener(view -> {
             memoryPresenter.setFavorite(memoryId);
-            memoryPresenter.loadMemory(memoryId);
+            favBtn.setImageResource(R.drawable.ic_star);
         });
 
         shareBtn = view.findViewById(R.id.shareBtn);
@@ -179,6 +179,9 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
         }
 
         if(lattitude != 0.0 && longitude != 0.0) {
+            if (!isAdded()){
+                return;
+            }
             SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapMemory);
 
             supportMapFragment.getMapAsync(googleMap -> {

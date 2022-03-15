@@ -131,7 +131,7 @@ public class EditMemoryFragment extends Fragment  {
         Glide.with(context).load(imageUri).into(image);
 
         if(lattitude != 0 && longitude != 0) {
-            add_place.setText("Coordonées : LAT " + lattitude + "LON " + longitude);
+            add_place.setText(String.format("Coordonées : LAT %,.2f LON %,.2f", lattitude, longitude));
         }
 
         // Set onClick des boutons

@@ -189,6 +189,8 @@ public class MemoryFragment extends Fragment implements MemoryPresenter.IMemoryS
                 googleMap.addMarker(new MarkerOptions().position(pos));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 16.0f));
             });
+        }else {
+            context.findViewById(R.id.mapMemory).setVisibility(View.GONE);
         }
 
     }

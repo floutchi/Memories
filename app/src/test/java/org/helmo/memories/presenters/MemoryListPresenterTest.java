@@ -2,29 +2,18 @@ package org.helmo.memories.presenters;
 
 import org.helmo.memories.MemoriesApplication;
 import org.helmo.memories.model.Memory;
-import org.helmo.memories.model.factories.MemoryFactories;
-import org.helmo.memories.repository.MemoryDataBase;
-import org.helmo.memories.repository.MemoryRepository;
 import org.junit.Test;
-import org.junit.runner.manipulation.Ordering;
-import org.mockito.Mock;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import android.app.Application;
-import android.content.Context;
-
-import androidx.test.core.app.ApplicationProvider;
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class MemoryListPresenterTest {
 
 
     @Test
     public void verifyReturnItemCount() {
+
         // Given
         MemoryListPresenter.IMemoryListScreen mockedMemoryListScreen = mock(MemoryListPresenter.IMemoryListScreen.class);
         MemoryListPresenter memoryListPresenter = new MemoryListPresenter(mockedMemoryListScreen);
@@ -37,7 +26,7 @@ public class MemoryListPresenterTest {
     }
 
     @Test
-    public void verifyReturnMemoryList() {
+    public void verifyReturnMemoryListOnNoLoad() {
         // Given
         MemoryListPresenter.IMemoryListScreen mockedMemoryListScreen = mock(MemoryListPresenter.IMemoryListScreen.class);
         MemoryListPresenter memoryListPresenter = new MemoryListPresenter(mockedMemoryListScreen);

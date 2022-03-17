@@ -17,7 +17,7 @@ public abstract class MemoryDataBase extends RoomDatabase {
 
     public static MemoryDataBase getInstance() {
         if(instance == null) {
-            throw new IllegalStateException("Memory report database must be initialized");
+            throw new IllegalStateException("Memory database must be initialized");
         }
         return instance;
     }

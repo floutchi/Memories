@@ -56,5 +56,24 @@ public class DeleteMemoryTest {
         onView(withId(R.id.fragment_container)).check(new RecyclerViewItemCount(0));
     }
 
+    @Test
+    public void testClickOnNoDeleteMemoryStayOnMemory() {
+        onView(ViewMatchers.withId(R.id.add_btn)).perform(click());
+
+        onView(withId(R.id.addName)).perform(typeText("test"), closeSoftKeyboard());
+        onView(withId(R.id.addDescription)).perform(typeText("test"), closeSoftKeyboard());
+
+        onView(withId(R.id.addMemoryBtn)).perform(click());
+
+        onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        onView(withId(R.id.deleteBtn)).perform(click());
+
+        onView(withText("Non")).check(matches(isDisplayed())).perform(click());
+        onView(withId(R.id.titleMemory)).check(matches(withText("test")));
+        onView(withId(R.id.dateMemory)).check(matches(withText("")));
+        onView(withId(R.id.descriptionMemory)).check(matches(withText("test")));
+    }
+
 
 }

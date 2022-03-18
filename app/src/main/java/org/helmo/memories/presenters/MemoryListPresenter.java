@@ -26,6 +26,7 @@ public class MemoryListPresenter {
     }
 
     public void loadMemories() {
+        System.out.println(MemoryRepository.getInstance().getMemories());
         MemoryRepository.getInstance().getMemories().observeForever(memories -> {
             this.memories = memories;
             screen.refreshView();

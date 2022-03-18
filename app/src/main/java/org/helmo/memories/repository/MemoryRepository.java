@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 
 public class MemoryRepository {
 
-    private static MemoryRepository instance;
+    protected static MemoryRepository instance;
 
     private final MemoryDao memoryDao = MemoryDataBase.getInstance().memoryDao();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
